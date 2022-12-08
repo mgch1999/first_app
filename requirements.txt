@@ -6,3 +6,5 @@ googlemaps
 google
 google-cloud-bigquery
 db-dtypes
+matplotlib
+japanize_matplotlib
