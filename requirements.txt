@@ -4,3 +4,4 @@ streamlit_folium
 pandas
 googlemaps
 google
+google-cloud-bigquery
