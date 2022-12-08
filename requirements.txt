@@ -5,3 +5,4 @@ pandas
 googlemaps
 google
 google-cloud-bigquery
+db-dtypes
