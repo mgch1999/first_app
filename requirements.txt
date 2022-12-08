@@ -1,0 +1,6 @@
+scikit-learn
+streamlit
+streamlit_folium
+pandas
+googlemaps
+google
