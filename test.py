@@ -89,6 +89,10 @@ else :
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
+        
+        fig, ax = plt.subplots()
+        plt.boxplot(df["prices"], color="dodgerblue", label=area1)
+        st.pyplot(fig)
 
     else:
         area2 == area2
@@ -142,3 +146,4 @@ else :
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
+
