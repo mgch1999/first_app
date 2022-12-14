@@ -45,20 +45,22 @@ FROM
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
-fig, ax = plt.subplots()
-ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-plt.xlabel("面積(m2)")
-plt.ylabel("家賃(万円)")
-plt.legend()
-st.pyplot(fig)
-
-fig, ax = plt.subplots()
-plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=100)
-plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-plt.xlabel("家賃(万円)")
-plt.ylabel("物件数")
-plt.legend()
-st.pyplot(fig)
+left, right = st.columns(2)
+with left:
+    fig, ax = plt.subplots()
+    ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+    plt.xlabel("面積(m2)")
+    plt.ylabel("家賃(万円)")
+    plt.legend()
+    st.pyplot(fig)
+with right:
+    fig, ax = plt.subplots()
+    plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=100)
+    plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+    plt.xlabel("家賃(万円)")
+    plt.ylabel("物件数")
+    plt.legend()
+    st.pyplot(fig)
 
 
 query = f"""
