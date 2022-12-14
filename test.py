@@ -43,7 +43,7 @@ madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "
 
 def scatter(madori):
 
-    if area1 == "指定なし":
+    if area2 == "指定なし":
         query = f"""
         WITH data_with_ku AS (
         SELECT
