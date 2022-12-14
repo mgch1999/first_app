@@ -91,7 +91,7 @@ else :
         st.pyplot(fig)
         
         fig, ax = plt.subplots()
-        plt.boxplot(df["prices"], label=area1)
+        plt.boxplot(df["prices"])
         st.pyplot(fig)
 
     else:
