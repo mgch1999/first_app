@@ -33,24 +33,30 @@ st.title("23区家賃予測アプリ")
 st.write("このアプリは希望条件を入力すると、23区内の物件の家賃推定ができます。")
 st.subheader("希望条件を選択")
 
-area = st.selectbox("エリア", ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
-                    "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区", "指定なし"))
-if area == "指定なし":
-    area = ""
-else:
-    area = area
+left, right = st.columns(2)
+with left:
+    area = st.selectbox("エリア", ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
+                        "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区", "指定なし"))
+    if area == "指定なし":
+        area = ""
+    else:
+        area = area
+with right:
+    madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
+    if madori == "ワンルーム":
+        madori = "tokyo_1r"
+    elif madori == "1K":
+        madori = "tokyo_1k"
+    else:
+        madori = "tokyo_1ldk"
 
-madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
-if madori == "ワンルーム":
-    madori = "tokyo_1r"
-elif madori == "1K":
-    madori = "tokyo_1k"
-else:
-    madori = "tokyo_1ldk"
-
-size = st.slider("面積(m2)", 0, 50, 25)
-year = st.slider('築年数', 0, 100, 5)
-access = st.slider('アクセス(分)', 0, 60, 5)
+s1, s2, s3 = st.columns(3)
+with s1:
+    size = st.slider("面積(m2)", 0, 50, 25)
+with s2:
+    year = st.slider('築年数', 0, 100, 5)
+with s3:
+    access = st.slider('アクセス(分)', 0, 60, 5)
 
 query = f"""
 SELECT * FROM prediction-rent-price.dataset1.{madori}
