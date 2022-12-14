@@ -42,35 +42,38 @@ madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "
 
 
 def scatter():
-    
-    query = f"""
-    WITH data_with_ku AS (
-    SELECT
-    *,
-    CASE 
-        WHEN address LIKE '%{area1}%' THEN '{area1}' 
-        WHEN address LIKE '%{area2}%' THEN '{area2}'
-    END AS ku
-    FROM
-        `prediction-rent-price.dataset1.{madori}`
-    )
-    SELECT
-    *
-    FROM
-    data_with_ku;"""
 
-    data = client.query(query).to_dataframe()
-    df = pd.DataFrame(data)
-    df1 = df.loc[(df["ku"]==area1)]
-    df2 = df.loc[(df["ku"]==area2)]
+    st.write(area1)
+    st.write(area2)
+    st.write(madori)
+    # query = f"""
+    # WITH data_with_ku AS (
+    # SELECT
+    # *,
+    # CASE 
+    #     WHEN address LIKE '%{area1}%' THEN '{area1}' 
+    #     WHEN address LIKE '%{area2}%' THEN '{area2}'
+    # END AS ku
+    # FROM
+    #     `prediction-rent-price.dataset1.{madori}`
+    # )
+    # SELECT
+    # *
+    # FROM
+    # data_with_ku;"""
 
-    fig, ax = plt.subplots()
-    ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-    ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
-    plt.xlabel("面積(m2)")
-    plt.ylabel("家賃(万円)")
-    plt.legend()
-    st.pyplot(fig)
+    # data = client.query(query).to_dataframe()
+    # df = pd.DataFrame(data)
+    # df1 = df.loc[(df["ku"]==area1)]
+    # df2 = df.loc[(df["ku"]==area2)]
+
+    # fig, ax = plt.subplots()
+    # ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+    # ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
+    # plt.xlabel("面積(m2)")
+    # plt.ylabel("家賃(万円)")
+    # plt.legend()
+    # st.pyplot(fig)
 
 class Select():
 
