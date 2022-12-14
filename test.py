@@ -34,7 +34,7 @@ client = bigquery.Client(
 ward = ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区")
 
-ymin, ymax = 0, 1500
+ymin, ymax = 0, 55000
 
 query = f"""
 SELECT
@@ -108,6 +108,7 @@ ax.bar(df["ku"], height=df["f0_"], color="dodgerblue")
 plt.xticks(rotation=50)
 st.pyplot(fig)
 
+ymin, ymax = 0, 1500
 
 area1 = st.selectbox("エリア選択", ward)
 area2 = st.selectbox("比較エリア選択", ward)
