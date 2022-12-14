@@ -69,7 +69,7 @@ FROM
     `prediction-rent-price.dataset1.tokyo_1k`
 )
 SELECT
-ku, avg(prices)
+ku, avg(prices), sizes, prices, yearss, access
 FROM
 data_with_ku
 GROUP BY 
@@ -82,6 +82,21 @@ df = df.sort_values("f0_", ascending=False)
 fig, ax = plt.subplots()
 ax.bar(df["ku"], height=df["f0_"], color="dodgerblue")
 plt.xticks(rotation=50)
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+plt.xlabel("面積(m2)")
+plt.ylabel("家賃(万円)")
+plt.legend()
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=50)
+plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+plt.xlabel("家賃(万円)")
+plt.ylabel("物件数")
+plt.legend()
 st.pyplot(fig)
 
 
