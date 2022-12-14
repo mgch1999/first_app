@@ -80,8 +80,9 @@ df = pd.DataFrame(data)
 df = df.sort_values("f0_", ascending=False)
 st.dataframe(df)
 fig, ax = plt.subplots()
-ax.bar(df["ku"], height=df["f0_"])
-plt.xticks(rotation=45)
+p = ax.bar(df["ku"], height=df["f0_"], color="dodgerblue")
+ax.bar_label(p)
+plt.xticks(rotation=50)
 st.pyplot(fig)
 
 
