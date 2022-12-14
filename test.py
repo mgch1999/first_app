@@ -69,9 +69,11 @@ FROM
     `prediction-rent-price.dataset1.tokyo_1k`
 )
 SELECT
-*
+ku, avg(prices)
 FROM
-data_with_ku;"""
+data_with_ku
+GROUP BY 
+ku;"""
          
 data = client.query(query).to_dataframe()
 st.dataframe(data)
