@@ -41,23 +41,9 @@ area2 = st.sidebar.selectbox("比較エリア選択", ward)
 madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
 
-if area1 == "指定なし":
-    pass
-
-else :
-    area1 = area1
+def scatter():
     
-    if area2 == "指定なし":
-        
-        if madori == "ワンルーム":
-            madori = "tokyo_1r"
-        
-        elif madori == "1K":
-            madori = "tokyo_1k"
-        
-        else:
-            madori = "tokyo_1ldk"
-
+    if area1 == "指定なし":
         query = f"""
         WITH data_with_ku AS (
         SELECT
@@ -83,32 +69,8 @@ else :
         plt.ylabel("価格(万円)")
         plt.legend()
         st.pyplot(fig)
-
-        fig, ax = plt.subplots()
-        plt.hist(df1["prices"],alpha=0.3, bins=50, color="dodgerblue", label=area1)
-        plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
-        plt.xlabel("家賃(万円)")
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
-        
-        fig, ax = plt.subplots()
-        plt.boxplot(df["prices"])
-        st.pyplot(fig)
-
+    
     else:
-        area2 == area2
-
-        if madori == "ワンルーム":
-            madori = "tokyo_1r"
-        
-        elif madori == "1K":
-            madori = "tokyo_1k"
-        
-        else:
-            madori = "tokyo_1ldk"
-
-
         query = f"""
         WITH data_with_ku AS (
         SELECT
@@ -137,15 +99,53 @@ else :
         plt.ylabel("家賃(万円)")
         plt.legend()
         st.pyplot(fig)
-        
-    
-        fig, ax = plt.subplots()
-        plt.hist(df1["prices"],alpha=0.4, color="dodgerblue", bins=50, label=area1)
-        plt.hist(df2["prices"],alpha=0.3, color="orange", bins=50, label=area2)
-        plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
-        plt.vlines(df2["prices"].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1, label=f"平均家賃({area2})" )
-        plt.xlabel("家賃(万円)")
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
+
+class Select():
+
+    def __init__(self, area1, area2, madori):
+        self.area1 = area1
+        self.area2 = area2
+        self.madori = madori
+
+    def select_scatter(self): 
+        if self.area1 == "指定なし":
+            pass
+        else :
+            self.area1 = area1   
+            if self.area2 == "指定なし":
+                if self.madori == "ワンルーム":
+                    scatter()
+                elif self.madori == "1K":
+                    scatter()
+                else:
+                    scatter()
+            else:
+                scatter()
+
+scatter_plot = Select(area1, area2, madori)
+scatter_plot.select_scatter()
+
+# fig, ax = plt.subplots()
+# plt.hist(df1["prices"],alpha=0.3, bins=50, color="dodgerblue", label=area1)
+# plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
+# plt.xlabel("家賃(万円)")
+# plt.ylabel("物件数")
+# plt.legend()
+# st.pyplot(fig)
+
+# fig, ax = plt.subplots()
+# plt.boxplot(df["prices"])
+# st.pyplot(fig)
+
+
+
+# fig, ax = plt.subplots()
+# plt.hist(df1["prices"],alpha=0.4, color="dodgerblue", bins=50, label=area1)
+# plt.hist(df2["prices"],alpha=0.3, color="orange", bins=50, label=area2)
+# plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
+# plt.vlines(df2["prices"].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1, label=f"平均家賃({area2})" )
+# plt.xlabel("家賃(万円)")
+# plt.ylabel("物件数")
+# plt.legend()
+# st.pyplot(fig)
 
