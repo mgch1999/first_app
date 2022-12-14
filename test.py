@@ -75,7 +75,7 @@ data_with_ku
 GROUP BY 
 ku;"""
          
-pd.options.display.float_format = "{:.2g}".format
+pd.options.display.float_format = "{:.0g}".format
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 df = df.sort_values("f0_", ascending=False)
