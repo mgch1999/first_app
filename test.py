@@ -79,6 +79,7 @@ pd.options.display.float_format = "{:.2g}".format
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 df = df.sort_values("f0_", ascending=False)
+st.dataframe(df)
 fig, ax = plt.subplots()
 p = ax.bar(df["ku"], height=df["f0_"], color="dodgerblue")
 ax.bar_label(p)
