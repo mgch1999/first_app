@@ -37,6 +37,31 @@ ward = ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東
 ymin, ymax = 0, 1500
 
 query = f"""
+SELECT
+*
+FROM
+`prediction-rent-price.dataset1.tokyo_1k`
+;"""
+data = client.query(query).to_dataframe()
+df = pd.DataFrame(data)
+
+fig, ax = plt.subplots()
+ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+plt.xlabel("面積(m2)")
+plt.ylabel("家賃(万円)")
+plt.legend()
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=50)
+plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+plt.xlabel("家賃(万円)")
+plt.ylabel("物件数")
+plt.legend()
+st.pyplot(fig)
+
+
+query = f"""
 WITH data_with_ku AS (
 SELECT
 *,
@@ -69,13 +94,12 @@ FROM
     `prediction-rent-price.dataset1.tokyo_1k`
 )
 SELECT
-ku, avg(prices), sizes, prices, yearss, access
+ku, avg(prices)
 FROM
 data_with_ku
 GROUP BY 
 ku;"""
          
-
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 df = df.sort_values("f0_", ascending=False)
@@ -83,23 +107,6 @@ fig, ax = plt.subplots()
 ax.bar(df["ku"], height=df["f0_"], color="dodgerblue")
 plt.xticks(rotation=50)
 st.pyplot(fig)
-
-fig, ax = plt.subplots()
-ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-plt.xlabel("面積(m2)")
-plt.ylabel("家賃(万円)")
-plt.legend()
-st.pyplot(fig)
-
-fig, ax = plt.subplots()
-plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=50)
-plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-plt.xlabel("家賃(万円)")
-plt.ylabel("物件数")
-plt.legend()
-st.pyplot(fig)
-
-
 
 
 area1 = st.selectbox("エリア選択", ward)
