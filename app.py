@@ -29,8 +29,11 @@ client = bigquery.Client(
             project=credentials.project_id,
         )
 
+markdown1 = "使用方法"
+markdown2 = "このアプリは、東京23区内の賃貸物件を対象に希望条件下の家賃を予測します。"
+st.sidebar.subheader(markdown1)
+
 st.title("23区家賃予測アプリ")
-st.sidebar.write("使用方法")
 st.subheader("希望条件を選択")
 
 left, right = st.columns(2)
