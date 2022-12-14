@@ -77,6 +77,7 @@ ku;"""
          
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
+df = df.sort_values("f0_", ascending=False)
 st.dataframe(df)
 fig, ax = plt.subplots()
 ax.bar(df["ku"], height=df["f0_"])
