@@ -53,7 +53,7 @@ plt.legend()
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=50)
+plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=20)
 plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
 plt.xlabel("家賃(万円)")
 plt.ylabel("物件数")
