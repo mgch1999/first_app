@@ -10,7 +10,9 @@ import googlemaps
 import matplotlib.pyplot as plt
 import japanize_matplotlib
 
-
+st.set_page_config(layout="wide",
+                   initial_sidebar_state="auto")
+ 
 def get_credentials(credential):
     if credential == "gcp_service_account":
         return service_account.Credentials.from_service_account_info(
