@@ -30,7 +30,7 @@ client = bigquery.Client(
         )
 
 st.title("23区家賃予測アプリ")
-st.write("このアプリは希望条件を入力すると、23区内の物件の家賃推定ができます。")
+st.sidebar.write("使用方法")
 st.subheader("希望条件を選択")
 
 left, right = st.columns(2)
@@ -87,7 +87,7 @@ df1 = df[["title", "price", "size", "years", "access", "address", "url"]]
 
 left, right = st.columns(2)
 with left:
-    st.subheader("推定家賃よりもお得な物件はこちら↓")
+    st.subheader("お得な物件リスト")
     st.dataframe(df1)
 with right:
     df2 = pd.pivot_table(data=df1, index="address")
