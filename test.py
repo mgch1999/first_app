@@ -31,7 +31,7 @@ client = bigquery.Client(
         )
 
 
-ward = ("指定なし","千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
+ward = ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区")
 
 ymin, ymax = 0, 1500
@@ -43,7 +43,7 @@ madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "
 
 def scatter(madori):
 
-    if area2 == "指定なし":
+    if area1 == area2:
         query = f"""
         WITH data_with_ku AS (
         SELECT
@@ -106,25 +106,23 @@ class Select():
         self.madori = madori
 
     def select_scatter(self): 
-        if self.area1 == "指定なし":
-            pass
-        else :
-            self.area1 = area1   
-            if self.area2 == "指定なし":
-                if self.madori == "ワンルーム":
-                    scatter("tokyo_1r")
-                elif self.madori == "1K":
-                    scatter("tokyo_1k")
-                else:
-                    scatter("tokyo_1ldk")
+        if self.area1 == area2:
+            self.area1 = area1 
+            self.area2 = area2  
+            if self.madori == "ワンルーム":
+                scatter("tokyo_1r")
+            elif self.madori == "1K":
+                scatter("tokyo_1k")
             else:
-                self.area2 = area2
-                if self.madori == "ワンルーム":
-                    scatter("tokyo_1r")
-                elif self.madori == "1K":
-                    scatter("tokyo_1k")
-                else:
-                    scatter("tokyo_1ldk")
+                scatter("tokyo_1ldk")
+        else:
+            self.area1 = area1
+            if self.madori == "ワンルーム":
+                scatter("tokyo_1r")
+            elif self.madori == "1K":
+                scatter("tokyo_1k")
+            else:
+                scatter("tokyo_1ldk")
 
 scatter_plot = Select(area1, area2, madori)
 scatter_plot.select_scatter()
