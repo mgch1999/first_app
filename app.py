@@ -31,7 +31,7 @@ client = bigquery.Client(
         )
 
 markdown1 = "使用方法"
-markdown2 = "このアプリは、東京23区内の賃貸物件を対象に希望条件下の家賃を予測します。"
+markdown2 = "このアプリは、東京23区内の賃貸物件を対象に希望条件下の家賃を予測します。お得な物件リストは、推定家賃よりも安く、指定した条件よりも築浅、面積が大きく、駅までのアクセス時間が短い物件を抽出したリストです。"
 st.sidebar.subheader(markdown1)
 st.sidebar.write(markdown2)
 
