@@ -41,7 +41,7 @@ area2 = st.sidebar.selectbox("比較エリア選択", ward)
 madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
 
-def scatter():
+def scatter(madori):
 
     query = f"""
     WITH data_with_ku AS (
@@ -60,17 +60,17 @@ def scatter():
     data_with_ku;"""
 
     data = client.query(query).to_dataframe()
-    # df = pd.DataFrame(data)
-    # df1 = df.loc[(df["ku"]==area1)]
-    # df2 = df.loc[(df["ku"]==area2)]
+    df = pd.DataFrame(data)
+    df1 = df.loc[(df["ku"]==area1)]
+    df2 = df.loc[(df["ku"]==area2)]
 
-    # fig, ax = plt.subplots()
-    # ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-    # ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
-    # plt.xlabel("面積(m2)")
-    # plt.ylabel("家賃(万円)")
-    # plt.legend()
-    # st.pyplot(fig)
+    fig, ax = plt.subplots()
+    ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+    ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
+    plt.xlabel("面積(m2)")
+    plt.ylabel("家賃(万円)")
+    plt.legend()
+    st.pyplot(fig)
 
 class Select():
 
@@ -86,13 +86,19 @@ class Select():
             self.area1 = area1   
             if self.area2 == "指定なし":
                 if self.madori == "ワンルーム":
-                    scatter()
+                    scatter("tokyo_1r")
                 elif self.madori == "1K":
-                    scatter()
+                    scatter("tokyo_1k")
                 else:
-                    scatter()
+                    scatter("tokyo_1ldk")
             else:
-                scatter()
+                self.area2 = area2
+                if self.madori == "ワンルーム":
+                    scatter("tokyo_1r")
+                elif self.madori == "1K":
+                    scatter("tokyo_1k")
+                else:
+                    scatter("tokyo_1ldk")
 
 scatter_plot = Select(area1, area2, madori)
 scatter_plot.select_scatter()
