@@ -43,26 +43,23 @@ madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "
 
 def scatter():
 
-    st.write(area1)
-    st.write(area2)
-    st.write(madori)
-    # query = f"""
-    # WITH data_with_ku AS (
-    # SELECT
-    # *,
-    # CASE 
-    #     WHEN address LIKE '%{area1}%' THEN '{area1}' 
-    #     WHEN address LIKE '%{area2}%' THEN '{area2}'
-    # END AS ku
-    # FROM
-    #     `prediction-rent-price.dataset1.{madori}`
-    # )
-    # SELECT
-    # *
-    # FROM
-    # data_with_ku;"""
+    query = f"""
+    WITH data_with_ku AS (
+    SELECT
+    *,
+    CASE 
+        WHEN address LIKE '%{area1}%' THEN '{area1}' 
+        WHEN address LIKE '%{area2}%' THEN '{area2}'
+    END AS ku
+    FROM
+        `prediction-rent-price.dataset1.{madori}`
+    )
+    SELECT
+    *
+    FROM
+    data_with_ku;"""
 
-    # data = client.query(query).to_dataframe()
+    data = client.query(query).to_dataframe()
     # df = pd.DataFrame(data)
     # df1 = df.loc[(df["ku"]==area1)]
     # df2 = df.loc[(df["ku"]==area2)]
