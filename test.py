@@ -74,7 +74,7 @@ FROM
 data_with_ku;"""
          
 data = client.query(query).to_dataflame()
-st.dataframe(data)
+df = pd.DataFrame(data)
 
 
 # area1 = st.selectbox("エリア選択", ward)
