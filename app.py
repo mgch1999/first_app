@@ -8,7 +8,8 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import googlemaps
 
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide",
+                   initial_sidebar_state="expanded")
 
 def get_credentials(credential):
     if credential == "gcp_service_account":
@@ -32,6 +33,7 @@ client = bigquery.Client(
 markdown1 = "使用方法"
 markdown2 = "このアプリは、東京23区内の賃貸物件を対象に希望条件下の家賃を予測します。"
 st.sidebar.subheader(markdown1)
+st.sidebar.write(markdown2)
 
 st.title("23区家賃予測アプリ")
 st.subheader("希望条件を選択")
