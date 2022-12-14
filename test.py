@@ -76,7 +76,10 @@ GROUP BY
 ku;"""
          
 data = client.query(query).to_dataframe()
-st.dataframe(data)
+df = pd.DataFrame(data)
+st.dataframe(df)
+
+
 
 
 # area1 = st.selectbox("エリア選択", ward)
