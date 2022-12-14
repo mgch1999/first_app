@@ -81,7 +81,7 @@ df = df.sort_values("f0_", ascending=False)
 st.dataframe(df)
 fig, ax = plt.subplots()
 ax.bar(df["ku"], height=df["f0_"])
-plt.xticks(rotation=90)
+plt.xticks(rotation=45)
 st.pyplot(fig)
 
 
