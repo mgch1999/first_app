@@ -140,21 +140,23 @@ def scatter(madori):
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df1 = df.loc[(df["ku"]==area1)]
-        
-        fig, ax = plt.subplots()
-        ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        plt.xlabel("面積(m2)")
-        plt.ylabel("家賃(万円)")
-        plt.legend()
-        st.pyplot(fig)
 
-        fig, ax = plt.subplots()
-        plt.hist(df1["prices"],alpha=0.3, bins=50, color="dodgerblue", label=area1)
-        plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
-        plt.xlabel("家賃(万円)")
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
+        left, right = st.columns(2)
+        with left:
+            fig, ax = plt.subplots()
+            ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+            plt.xlabel("面積(m2)")
+            plt.ylabel("家賃(万円)")
+            plt.legend()
+            st.pyplot(fig)
+        with right:
+            fig, ax = plt.subplots()
+            plt.hist(df1["prices"],alpha=0.3, bins=50, color="dodgerblue", label=area1)
+            plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
+            plt.xlabel("家賃(万円)")
+            plt.ylabel("物件数")
+            plt.legend()
+            st.pyplot(fig)
         
     else:
         query = f"""
@@ -178,23 +180,25 @@ def scatter(madori):
         df1 = df.loc[(df["ku"]==area1)]
         df2 = df.loc[(df["ku"]==area2)]
 
-        fig, ax = plt.subplots()
-        ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
-        plt.xlabel("面積(m2)")
-        plt.ylabel("家賃(万円)")
-        plt.legend()
-        st.pyplot(fig)
-
-        fig, ax = plt.subplots()
-        plt.hist(df1["prices"],alpha=0.4, color="dodgerblue", bins=50, label=area1)
-        plt.hist(df2["prices"],alpha=0.3, color="orange", bins=50, label=area2)
-        plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
-        plt.vlines(df2["prices"].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1, label=f"平均家賃({area2})" )
-        plt.xlabel("家賃(万円)")
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
+        left, right = st.columns(2)
+        with left:
+            fig, ax = plt.subplots()
+            ax.scatter(df1["sizes"], df1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+            ax.scatter(df2["sizes"], df2["prices"], alpha=0.1, color="orange",s=10, label=area2)
+            plt.xlabel("面積(m2)")
+            plt.ylabel("家賃(万円)")
+            plt.legend()
+            st.pyplot(fig)
+        with right:
+            fig, ax = plt.subplots()
+            plt.hist(df1["prices"],alpha=0.4, color="dodgerblue", bins=50, label=area1)
+            plt.hist(df2["prices"],alpha=0.3, color="orange", bins=50, label=area2)
+            plt.vlines(df1["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1, label=f"平均家賃({area1})")
+            plt.vlines(df2["prices"].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1, label=f"平均家賃({area2})" )
+            plt.xlabel("家賃(万円)")
+            plt.ylabel("物件数")
+            plt.legend()
+            st.pyplot(fig)
 
 class Select():
     def __init__(self, area1, area2, madori):
