@@ -117,6 +117,7 @@ def analysis1():
             exp1 = "accesses"
         s1 = pd.Series(df[exp1])
         s2 = pd.Series(df["prices"])
+        st.write("相関係数")
         st.write(round(s1.corr(s2), 2))
     with right:
         fig, ax = plt.subplots()
@@ -166,6 +167,7 @@ def analysis2():
         s2 = pd.Series(df["prices"])
         s3 = pd.Series(df_ward2[exp1])
         s4 = pd.Series(df_ward2["prices"])
+        st.write("相関係数")
         st.write(round(s1.corr(s2), 2))
         st.write(round(s3.corr(s4), 2))
     with right:
@@ -218,6 +220,7 @@ def analysis3():
             exp1 = "accesses"
         s1 = pd.Series(df_ward1[exp1])
         s2 = pd.Series(df_ward1["prices"])
+        st.write("相関係数")
         st.write(round(s1.corr(s2), 2))
     with right:
         fig, ax = plt.subplots()
@@ -268,6 +271,7 @@ def analysis4():
         s2 = pd.Series(df_ward1["prices"])
         s3 = pd.Series(df_ward2[exp1])
         s4 = pd.Series(df_ward2["prices"])
+        st.write("相関係数")
         st.write(round(s1.corr(s2), 2))
         st.write(round(s3.corr(s4), 2))
     with right:
