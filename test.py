@@ -35,7 +35,7 @@ client = bigquery.Client(
 ward = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 
-variable = ["面積(m2)", "築年数", "アクセス(分)", "家賃(万円)"]
+variable = ["面積(m2)", "築年数", "アクセス(分)"]
 
 # ymin, ymax = 0, 55000
 
@@ -127,57 +127,24 @@ def scatter():
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("説明変数", variable)
-        obj = st.selectbox("目的変数", variable)
+        st.write("目的変数:家賃(万円)")
         if exp == "面積(m2)":
             exp1 = "sizes"
-            if obj == "面積(m2)":
-                obj1 = "sizes"
-            elif obj == "築年数":
-                obj1 = "yearss"
-            elif obj == "アクセス(分)":
-                obj1 = "accesses"
-            else:
-                obj1 = "prices"
         elif exp == "築年数":
             exp1 = "yearss"
-            if obj == "面積(m2)":
-                obj1 = "sizes"
-            elif obj == "築年数":
-                obj1 = "yearss"
-            elif obj == "アクセス(分)":
-                obj1 = "accesses"
-            else:
-                obj1 = "prices"
-        elif exp == "アクセス(分)":
-            exp1 = "accesses"
-            if obj == "面積(m2)":
-                obj1 = "sizes"
-            elif obj == "築年数":
-                obj1 = "yearss"
-            elif obj == "アクセス(分)":
-                obj1 = "accesses"
-            else:
-                obj1 = "prices"
         else:
-            exp1 = "prices"
-            if obj == "面積(m2)":
-                obj1 = "sizes"
-            elif obj == "築年数":
-                obj1 = "yearss"
-            elif obj == "アクセス(分)":
-                obj1 = "accesses"
-            else:
-                obj1 = "prices"  
-        
-        df_corr = df[[exp1, obj1]]
-        st.write(df_corr.corr())
+            exp1 = "accesses"
+        s1 = pd.Series(df[exp1])
+        s2 = pd.Series(df["prices"])
+        st.write(s1.corr(s2))
     with right:
         fig, ax = plt.subplots()
-        ax.scatter(df[exp1], df[obj1], alpha=0.4, color="dodgerblue",s=10)
+        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
         plt.xlabel(exp)
-        plt.ylabel(obj)
+        plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+
 
 def analysis_23(madori):
 
