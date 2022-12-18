@@ -32,8 +32,10 @@ client = bigquery.Client(
             project=credentials.project_id,
         )
 
-ward = ("指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
-                                      "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区")
+ward = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
+                                      "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
+
+variable = ["面積(m2)", "築年数", "アクセス(分)", "家賃(万円)"]
 
 # ymin, ymax = 0, 55000
 
@@ -79,8 +81,7 @@ elif madori == "1K":
 else:
     madori = "tokyo_1ldk"
 
-def analysis_23(madori):
-    query = f"""
+query = f"""
     WITH data_with_ku AS (
     SELECT
     *,
@@ -117,24 +118,86 @@ def analysis_23(madori):
     FROM
     data_with_ku
     ;"""
+
+data = client.query(query).to_dataframe()
+df = pd.DataFrame(data)
+
+def select_var():
+    st.subheader("散布図")
+    exp = st.selectbox("説明変数", variable)
+    obj = st.selectbox("目的変数", variable)
+    if exp == "面積(m2)":
+        exp = "sizes"
+        if obj == "面積(m2)":
+            obj = "sizes"
+        elif obj == "築年数":
+            obj = "yearss"
+        elif obj == "アクセス(分)":
+            obj = "accesses"
+        else:
+            obj = "prices"
+    elif exp == "築年数":
+        exp = "yearss"
+        if obj == "面積(m2)":
+            obj = "sizes"
+        elif obj == "築年数":
+            obj = "yearss"
+        elif obj == "アクセス(分)":
+            obj = "accesses"
+        else:
+            obj = "prices"
+    elif exp == "アクセス(分)":
+        exp = "accesses"
+        if obj == "面積(m2)":
+            obj = "sizes"
+        elif obj == "築年数":
+            obj = "yearss"
+        elif obj == "アクセス(分)":
+            obj = "accesses"
+        else:
+            obj = "prices"
+    else:
+        exp = "prices"
+        if obj == "面積(m2)":
+            obj = "sizes"
+        elif obj == "築年数":
+            obj = "yearss"
+        elif obj == "アクセス(分)":
+            obj = "accesses"
+        else:
+            obj = "prices"
+
+# def scatter_plot(exp ,obj):
+#     fig, ax = plt.subplots()
+#     ax.scatter(df[exp], df[obj], alpha=0.4, color="dodgerblue",s=10)
+#     plt.xlabel("面積(m2)")
+#     plt.ylabel("家賃(万円)")
+#     plt.legend()
+#     st.pyplot(fig)
+
+def analysis_23(madori):
             
+    st.subheader("23区の家賃平均比較")
     left, right = st.columns(2)
     with left:
-        data = client.query(query).to_dataframe()
-        df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
+        df = df.sort_values("prices", ascending=False)
         st.table(df.style.format('{:.1f}'))
     with right:
-        df = df.sort_values("prices", ascending=False)
         fig, ax = plt.subplots()
         ax.bar(df.index, height=df["prices"], color="dodgerblue")
         plt.xticks(rotation=50)
         st.pyplot(fig)
-    
+
+    left, right = st.columns(2)
+    with left:
+        select_var()
+    with right:
+        st.write("a")
+
 
 def analysis(madori):
     st.write("a")
-
 
 class Select():
     def __init__(self, area1, area2):
@@ -152,6 +215,10 @@ class Select():
                 analysis(madori)
             else:
                 analysis(madori)
+
+
+
+
 
 
 scatter_plot = Select(area1, area2)
