@@ -119,7 +119,7 @@ def analysis1():
             exp1 = "accesses"
         s1 = pd.Series(df[exp1])
         s2 = pd.Series(df["prices"])
-        st.write("相関係数"+s1.corr(s2))
+        st.write(s1.corr(s2))
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
