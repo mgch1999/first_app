@@ -123,16 +123,14 @@ def analysis_23(madori):
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
-        st.write(df.style.format('{:.2f}'))
+        st.write(df.style.format('{:.1f}'))
 
     with right:
-        st.write("a")
-        # df = pd.pivot_table(data=df, index="ku", columns="prices")
-        # df = df.sort_values("prices", ascending=False)
-        # fig, ax = plt.subplots()
-        # ax.bar(df.index, height=df["prices"], color="dodgerblue")
-        # plt.xticks(rotation=50)
-        # st.pyplot(fig)
+        df = df.sort_values("prices", ascending=False)
+        fig, ax = plt.subplots()
+        ax.bar(df.index, height=df["prices"], color="dodgerblue")
+        plt.xticks(rotation=50)
+        st.pyplot(fig)
     
 
 def analysis(madori):
