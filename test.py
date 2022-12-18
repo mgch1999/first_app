@@ -123,7 +123,7 @@ def analysis_23(madori):
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
-        st.dataframe(df.style.format('{:.1f}'))
+        st.table(df.style.format('{:.1f}'))
     with right:
         df = df.sort_values("prices", ascending=False)
         fig, ax = plt.subplots()
