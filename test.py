@@ -72,6 +72,13 @@ area1 = st.selectbox("エリア選択", ward)
 area2 = st.selectbox("比較エリア選択", ward)
 madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
+if madori =="ワンルーム":
+    madori = "ワンルーム"
+elif madori == "1K":
+    madori = "tokyo_1k"
+else:
+    madori = "tokyo_1ldk"
+
 def analysis_23(madori):
     query = f"""
     WITH data_with_ku AS (
