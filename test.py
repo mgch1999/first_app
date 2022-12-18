@@ -189,7 +189,7 @@ def analysis_23(madori):
         plt.xticks(rotation=50)
         st.pyplot(fig)
 
-    
+    scatter()
     
 
         
