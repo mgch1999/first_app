@@ -92,8 +92,8 @@ df = pd.DataFrame(data)
 
 def analysis1():
     ymin, ymax = 0, 50000
-    left, right = st.columns(2)
     st.subheader("23区家賃平均")
+    left, right = st.columns(2)
     with left:
         avg = pd.pivot_table(df, index="ku", values="prices")
         avg = avg.sort_values("prices", ascending=False)
