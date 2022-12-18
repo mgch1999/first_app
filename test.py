@@ -32,9 +32,10 @@ client = bigquery.Client(
             project=credentials.project_id,
         )
 
-ward = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
+ward1 = ["全体", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
-
+ward2 = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
+                                      "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 variable1 = ["面積(m2)", "築年数", "アクセス(分)"]
 variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 
@@ -42,8 +43,8 @@ variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 
 ymin, ymax = 0, 1500
 
-area1 = st.selectbox("エリア選択", ward)
-area2 = st.selectbox("比較エリア選択", ward)
+area1 = st.selectbox("エリア選択", ward1)
+area2 = st.selectbox("比較エリア選択", ward2)
 madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
 if madori =="ワンルーム":
@@ -94,28 +95,57 @@ query = f"""
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
-def scatter():
-    st.subheader("散布図")
-    left, right = st.columns(2)
-    with left:
-        exp = st.selectbox("説明変数", variable1)
-        st.write("目的変数:家賃(万円)")
-        if exp == "面積(m2)":
-            exp1 = "sizes"
-        elif exp == "築年数":
-            exp1 = "yearss"
-        else:
-            exp1 = "accesses"
-        s1 = pd.Series(df[exp1])
-        s2 = pd.Series(df["prices"])
-        st.write(s1.corr(s2))
-    with right:
-        fig, ax = plt.subplots()
-        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-        plt.xlabel(exp)
-        plt.ylabel("家賃")
-        plt.legend()
-        st.pyplot(fig)
+def scatter(area1, area2):
+    if area1 == "全体" and area2 == "指定なし":
+        st.subheader("散布図")
+        left, right = st.columns(2)
+        with left:
+            exp = st.selectbox("説明変数", variable1)
+            st.write("目的変数:家賃(万円)")
+            if exp == "面積(m2)":
+                exp1 = "sizes"
+            elif exp == "築年数":
+                exp1 = "yearss"
+            else:
+                exp1 = "accesses"
+            s1 = pd.Series(df[exp1])
+            s2 = pd.Series(df["prices"])
+            st.write(s1.corr(s2))
+        with right:
+            fig, ax = plt.subplots()
+            ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+            plt.xlabel(exp)
+            plt.ylabel("家賃")
+            plt.legend()
+            st.pyplot(fig)
+    elif area1 == "全体" and area2 != "指定なし":
+        df_ward2 = df[df["ku"] == area2]
+        st.subheader("散布図")
+        left, right = st.columns(2)
+        with left:
+            exp = st.selectbox("説明変数", variable1)
+            st.write("目的変数:家賃(万円)")
+            if exp == "面積(m2)":
+                exp1 = "sizes"
+            elif exp == "築年数":
+                exp1 = "yearss"
+            else:
+                exp1 = "accesses"
+            s1 = pd.Series(df[exp1])
+            s2 = pd.Series(df["prices"])
+            s3 = pd.Series(df_ward2[exp1])
+            s4 = pd.Series(df_ward2["prices"])
+            st.write(s1.corr(s2))
+            st.write(s3.corr(s4))
+        with right:
+            fig, ax = plt.subplots()
+            ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+            ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10)
+            plt.xlabel(exp)
+            plt.ylabel("家賃")
+            plt.legend()
+            st.pyplot(fig)
+    
 
 def hist():
     left, right = st.columns(2)
@@ -140,7 +170,6 @@ def hist():
         plt.legend()
         st.pyplot(fig)
 
-
 def analysis_23(madori):
     left, right = st.columns(2)
     with left:
@@ -153,11 +182,13 @@ def analysis_23(madori):
         plt.xticks(rotation=50)
         st.pyplot(fig)
     
-    scatter()
+    scatter(area1, area2)
     
     hist()
 
-    
+def analysis_23_1(madori):
+
+    scatter(area1, area2)
 
         
 
@@ -171,11 +202,11 @@ class Select():
         self.area2 = area2
 
     def select_city(self, madori): 
-        if self.area1 == "指定なし":
+        if self.area1 == "全体":
             if self.area2 == "指定なし":
                 analysis_23(madori)
             else:
-                analysis_23(madori)
+                analysis_23_1(madori)
         else:
             if self.area2 == "指定なし":
                 analysis(madori)
