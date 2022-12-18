@@ -118,14 +118,12 @@ def analysis_23(madori):
     data_with_ku
     ;"""
             
-    left, center, right = st.columns(3)
+    left, right = st.columns(2)
     with left:
-        st.subheader("23区の家賃平均比較")
-    with center:
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
-        st.write(df.style.format('{:.1f}'))
+        st.dataframe(df.style.format('{:.1f}'))
     with right:
         df = df.sort_values("prices", ascending=False)
         fig, ax = plt.subplots()
