@@ -35,36 +35,8 @@ client = bigquery.Client(
 ward = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 
-variable = ["面積(m2)", "築年数", "アクセス(分)"]
-
-# ymin, ymax = 0, 55000
-
-# query = f"""
-# SELECT
-# *
-# FROM
-# `prediction-rent-price.dataset1.tokyo_1k`
-# ;"""
-# data = client.query(query).to_dataframe()
-# df = pd.DataFrame(data)
-
-# left, right = st.columns(2)
-# with left:
-#     fig, ax = plt.subplots()
-#     ax.scatter(df["sizes"], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-#     plt.xlabel("面積(m2)")
-#     plt.ylabel("家賃(万円)")
-#     plt.legend()
-#     st.pyplot(fig)
-# with right:
-#     fig, ax = plt.subplots()
-#     plt.hist(df["prices"],alpha=0.4, color="dodgerblue", bins=100)
-#     plt.vlines(df["prices"].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-#     plt.xlabel("家賃(万円)")
-#     plt.ylabel("物件数")
-#     plt.legend()
-#     st.pyplot(fig)
-
+variable1 = ["面積(m2)", "築年数", "アクセス(分)"]
+variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 
 
 
@@ -126,7 +98,7 @@ def scatter():
     st.subheader("散布図")
     left, right = st.columns(2)
     with left:
-        exp = st.selectbox("説明変数", variable)
+        exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
         if exp == "面積(m2)":
             exp1 = "sizes"
@@ -148,7 +120,7 @@ def scatter():
 def hist():
     left, right = st.columns(2)
     with left:
-        exp = st.selectbox("変数", variable)
+        exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
         elif exp == "築年数":
@@ -157,7 +129,8 @@ def hist():
             exp1 = "accesses"
         else:
             exp1 = "prices"
-        
+        st.write("平均")
+        st.write(df[exp1].mean())
     with right:
         fig, ax = plt.subplots()
         plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
