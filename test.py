@@ -73,7 +73,7 @@ area2 = st.selectbox("比較エリア選択", ward)
 madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
 if madori =="ワンルーム":
-    madori = "ワンルーム"
+    madori = "tokyo_1r"
 elif madori == "1K":
     madori = "tokyo_1k"
 else:
@@ -123,7 +123,7 @@ def analysis_23(madori):
         data = client.query(query).to_dataframe()
         st.dataframe(data)
     with right:
-        df = pd.pivot_table("ku", columns="prices")
+        df = pd.pivot_table(data=df, index="ku", columns="prices")
         df = df.sort_values("prices", ascending=False)
         fig, ax = plt.subplots()
         ax.bar(df.index, height=df["prices"], color="dodgerblue")
