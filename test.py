@@ -168,11 +168,14 @@ def scatter():
                 obj1 = "accesses"
             else:
                 obj1 = "prices"  
+        
+        df_corr = df[[exp1, obj1]]
+        st.write(df_corr.corr())
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df[obj1], alpha=0.4, color="dodgerblue",s=10)
-        plt.xlabel(obj)
-        plt.ylabel(exp)
+        plt.xlabel(exp)
+        plt.ylabel(obj)
         plt.legend()
         st.pyplot(fig)
 
