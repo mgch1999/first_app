@@ -122,8 +122,7 @@ def analysis_23(madori):
     with left:
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
-        df = pd.pivot_table(df, index="ku", columns="prices")
-        df = df.sort_values("prices", ascending=False)
+        df = pd.pivot_table(df, index="ku")
         st.dataframe(df)
 
     with right:
