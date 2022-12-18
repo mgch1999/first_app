@@ -120,7 +120,7 @@ def analysis_23(madori):
             
     left, right = st.columns(2)
     with left:
-        pd.options.display.float_format = '{:.2f}'.format
+        pd.options.display.float_format = '{:.0f}'.format
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
