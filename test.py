@@ -120,11 +120,10 @@ def analysis_23(madori):
             
     left, right = st.columns(2)
     with left:
-        pd.options.display.precision = 2
         data = client.query(query).to_dataframe()
         df = pd.DataFrame(data)
         df = pd.pivot_table(df, index="ku", values="prices")
-        st.dataframe(df)
+        st.write(df.style.format('{:.2f}'))
 
     with right:
         st.write("a")
