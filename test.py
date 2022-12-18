@@ -40,9 +40,6 @@ variable1 = ["面積(m2)", "築年数", "アクセス(分)"]
 variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 
 
-
-ymin, ymax = 0, 1500
-
 area1 = st.selectbox("エリア選択", ward1)
 area2 = st.selectbox("比較エリア選択", ward2)
 madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
@@ -96,6 +93,7 @@ data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
 def analysis1():
+    ymin, ymax = 0, 15000
     left, right = st.columns(2)
     with left:
         avg = pd.pivot_table(df, index="ku", values="prices")
@@ -150,6 +148,7 @@ def analysis1():
         st.pyplot(fig)
 
 def analysis2():
+    ymin, ymax = 0, 15000
     df_ward2 = df[df["ku"] == area2]
     st.subheader("散布図")
     left, right = st.columns(2)
@@ -202,7 +201,50 @@ def analysis2():
         st.pyplot(fig)
     
 def analysis3():
-    pass
+    ymin, ymax = 0, 1500
+    df_ward1 = df[df["ku"] == area1]
+    st.subheader("散布図")
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("説明変数", variable1)
+        st.write("目的変数:家賃(万円)")
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        else:
+            exp1 = "accesses"
+        s1 = pd.Series(df_ward1[exp1])
+        s2 = pd.Series(df_ward1["prices"])
+        st.write(s1.corr(s2))
+    with right:
+        fig, ax = plt.subplots()
+        ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10)
+        plt.xlabel(exp)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("変数", variable2)
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        elif exp == "アクセス(分)":
+            exp1 = "accesses"
+        else:
+            exp1 = "prices"
+        st.write("平均")
+        st.write(df_ward1[exp1].mean())
+    with right:
+        fig, ax = plt.subplots()
+        plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100)
+        plt.vlines(df_ward1[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.xlabel(exp)
+        plt.ylabel("物件数")
+        plt.legend()
+        st.pyplot(fig)
 
 def analysis4():
     pass
@@ -220,16 +262,6 @@ class Select():
             analysis3()
         else:
             analysis4()
-        # if self.area1 == "全体":
-        #     if self.area2 == "指定なし":
-        #         analysis_23(madori)
-        #     else:
-        #         analysis_23_1(madori)
-        # else:
-        #     if self.area2 == "指定なし":
-        #         analysis(madori)
-        #     else:
-        #         analysis(madori)
     
 scatter_plot = Select(area1, area2)
 scatter_plot.select_city()
