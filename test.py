@@ -23,7 +23,6 @@ def get_credentials(credential):
     else:
         return None
 
-
 credentials = get_credentials("gcp_service_account")
 gmaps = get_credentials("googlemapsapi")
         
@@ -38,7 +37,6 @@ ward2 = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "�
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 variable1 = ["面積(m2)", "築年数", "アクセス(分)"]
 variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
-
 
 area1 = st.selectbox("エリア選択", ward1)
 area2 = st.selectbox("比較エリア選択", ward2)
@@ -125,6 +123,7 @@ def analysis1():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+    st.subheader("ヒストグラム")
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("変数", variable2)
@@ -175,6 +174,7 @@ def analysis2():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+    st.subheader("ヒストグラム")
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("変数", variable2)
@@ -224,6 +224,7 @@ def analysis3():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+    st.subheader("ヒストグラム")
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("変数", variable2)
@@ -247,7 +248,59 @@ def analysis3():
         st.pyplot(fig)
 
 def analysis4():
-    pass
+    ymin, ymax = 0, 1500
+    df_ward1 = df[df["ku"] == area1]
+    df_ward2 = df[df["ku"] == area2]
+    st.subheader("散布図")
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("説明変数", variable1)
+        st.write("目的変数:家賃(万円)")
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        else:
+            exp1 = "accesses"
+        s1 = pd.Series(df_ward1[exp1])
+        s2 = pd.Series(df_ward1["prices"])
+        s3 = pd.Series(df_ward2[exp1])
+        s4 = pd.Series(df_ward2["prices"])
+        st.write(s1.corr(s2))
+        st.write(s3.corr(s4))
+    with right:
+        fig, ax = plt.subplots()
+        ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10)
+        ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10)
+        plt.xlabel(exp)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    st.subheader("ヒストグラム")
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("変数", variable2)
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        elif exp == "アクセス(分)":
+            exp1 = "accesses"
+        else:
+            exp1 = "prices"
+        st.write("平均")
+        st.write(df_ward1[exp1].mean())
+        st.write(df_ward2[exp1].mean())
+    with right:
+        fig, ax = plt.subplots()
+        plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100)
+        plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100)
+        plt.vlines(df_ward1[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+        plt.xlabel(exp)
+        plt.ylabel("物件数")
+        plt.legend()
+        st.pyplot(fig)
 class Select():
     def __init__(self, area1, area2):
         self.area1 = area1
@@ -259,6 +312,8 @@ class Select():
         elif area1 == "全体" and area2 != "指定なし":
             analysis2()
         elif area1 != "全体" and area2 == "指定なし":
+            analysis3()
+        elif area1 == area2:
             analysis3()
         else:
             analysis4()
