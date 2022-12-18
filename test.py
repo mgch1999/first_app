@@ -145,9 +145,30 @@ def scatter():
         plt.legend()
         st.pyplot(fig)
 
+def hist():
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("変数", variable)
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        elif exp == "アクセス(分)":
+            exp1 = "accesses"
+        else:
+            exp1 = "prices"
+        
+    with right:
+        fig, ax = plt.subplots()
+        plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
+        plt.vlines(df[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.xlabel(exp)
+        plt.ylabel("物件数")
+        plt.legend()
+        st.pyplot(fig)
+
 
 def analysis_23(madori):
-
     left, right = st.columns(2)
     with left:
         avg = pd.pivot_table(df, index="ku", values="prices")
@@ -158,8 +179,11 @@ def analysis_23(madori):
         ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
         plt.xticks(rotation=50)
         st.pyplot(fig)
-
+    
     scatter()
+    
+    hist()
+
     
 
         
