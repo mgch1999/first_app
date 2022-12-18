@@ -95,59 +95,38 @@ query = f"""
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
-def scatter(area1, area2):
-    if area1 == "全体" and area2 == "指定なし":
-        st.subheader("散布図")
-        left, right = st.columns(2)
-        with left:
-            exp = st.selectbox("説明変数", variable1)
-            st.write("目的変数:家賃(万円)")
-            if exp == "面積(m2)":
-                exp1 = "sizes"
-            elif exp == "築年数":
-                exp1 = "yearss"
-            else:
-                exp1 = "accesses"
-            s1 = pd.Series(df[exp1])
-            s2 = pd.Series(df["prices"])
-            st.write("相関係数"+s1.corr(s2))
-        with right:
-            fig, ax = plt.subplots()
-            ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-            plt.xlabel(exp)
-            plt.ylabel("家賃")
-            plt.legend()
-            st.pyplot(fig)
-    elif area1 == "全体" and area2 != "指定なし":
-        df_ward2 = df[df["ku"] == area2]
-        st.subheader("散布図")
-        left, right = st.columns(2)
-        with left:
-            exp = st.selectbox("説明変数", variable1)
-            st.write("目的変数:家賃(万円)")
-            if exp == "面積(m2)":
-                exp1 = "sizes"
-            elif exp == "築年数":
-                exp1 = "yearss"
-            else:
-                exp1 = "accesses"
-            s1 = pd.Series(df[exp1])
-            s2 = pd.Series(df["prices"])
-            s3 = pd.Series(df_ward2[exp1])
-            s4 = pd.Series(df_ward2["prices"])
-            st.write("相関係数(全体)"+s1.corr(s2))
-            st.write(f"相関係数({area2})"+s3.corr(s4))
-        with right:
-            fig, ax = plt.subplots()
-            ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
-            ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10)
-            plt.xlabel(exp)
-            plt.ylabel("家賃")
-            plt.legend()
-            st.pyplot(fig)
-    
-
-def hist():
+def analysis1():
+    left, right = st.columns(2)
+    with left:
+        avg = pd.pivot_table(df, index="ku", values="prices")
+        avg = avg.sort_values("prices", ascending=False)
+        st.table(avg.style.format('{:.1f}'))
+    with right:
+        fig, ax = plt.subplots()
+        ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
+        plt.xticks(rotation=50)
+        st.pyplot(fig)
+    st.subheader("散布図")
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("説明変数", variable1)
+        st.write("目的変数:家賃(万円)")
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        else:
+            exp1 = "accesses"
+        s1 = pd.Series(df[exp1])
+        s2 = pd.Series(df["prices"])
+        st.write("相関係数"+s1.corr(s2))
+    with right:
+        fig, ax = plt.subplots()
+        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+        plt.xlabel(exp)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("変数", variable2)
@@ -170,55 +149,89 @@ def hist():
         plt.legend()
         st.pyplot(fig)
 
-def analysis_23(madori):
+def analysis2():
+    df_ward2 = df[df["ku"] == area2]
+    st.subheader("散布図")
     left, right = st.columns(2)
     with left:
-        avg = pd.pivot_table(df, index="ku", values="prices")
-        avg = avg.sort_values("prices", ascending=False)
-        st.table(avg.style.format('{:.1f}'))
+        exp = st.selectbox("説明変数", variable1)
+        st.write("目的変数:家賃(万円)")
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        else:
+            exp1 = "accesses"
+        s1 = pd.Series(df[exp1])
+        s2 = pd.Series(df["prices"])
+        s3 = pd.Series(df_ward2[exp1])
+        s4 = pd.Series(df_ward2["prices"])
+        st.write(s1.corr(s2))
+        st.write(s3.corr(s4))
     with right:
         fig, ax = plt.subplots()
-        ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
-        plt.xticks(rotation=50)
+        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+        ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10)
+        plt.xlabel(exp)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    left, right = st.columns(2)
+    with left:
+        exp = st.selectbox("変数", variable2)
+        if exp == "面積(m2)":
+            exp1 = "sizes"
+        elif exp == "築年数":
+            exp1 = "yearss"
+        elif exp == "アクセス(分)":
+            exp1 = "accesses"
+        else:
+            exp1 = "prices"
+        st.write("平均")
+        st.write(df[exp1].mean())
+        st.write(df_ward2[exp1].mean())
+    with right:
+        fig, ax = plt.subplots()
+        plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
+        plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100)
+        plt.vlines(df[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+        plt.xlabel(exp)
+        plt.ylabel("物件数")
+        plt.legend()
         st.pyplot(fig)
     
-    scatter(area1, area2)
-    
-    hist()
+def analysis3():
+    pass
 
-def analysis_23_1(madori):
-
-    scatter(area1, area2)
-
-        
-
-
-def analysis(madori):
-    st.write("a")
-
+def analysis4():
+    pass
 class Select():
     def __init__(self, area1, area2):
         self.area1 = area1
         self.area2 = area2
 
-    def select_city(self, madori): 
-        if self.area1 == "全体":
-            if self.area2 == "指定なし":
-                analysis_23(madori)
-            else:
-                analysis_23_1(madori)
+    def select_city(self): 
+        if self.area1 == "全体" and self.area2 == "指定なし":
+            analysis1()
+        elif area1 == "全体" and area2 != "指定なし":
+            analysis2()
+        elif area1 != "全体" and area2 == "指定なし":
+            analysis3()
         else:
-            if self.area2 == "指定なし":
-                analysis(madori)
-            else:
-                analysis(madori)
-
-
-
-
-
-
+            analysis4()
+        # if self.area1 == "全体":
+        #     if self.area2 == "指定なし":
+        #         analysis_23(madori)
+        #     else:
+        #         analysis_23_1(madori)
+        # else:
+        #     if self.area2 == "指定なし":
+        #         analysis(madori)
+        #     else:
+        #         analysis(madori)
+    
 scatter_plot = Select(area1, area2)
-scatter_plot.select_city(madori)
+scatter_plot.select_city()
 
 
