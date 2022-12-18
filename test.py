@@ -91,7 +91,7 @@ data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
 def analysis1():
-    ymin, ymax = 0, 15000
+    ymin, ymax = 0, 50000
     left, right = st.columns(2)
     with left:
         avg = pd.pivot_table(df, index="ku", values="prices")
@@ -147,7 +147,7 @@ def analysis1():
         st.pyplot(fig)
 
 def analysis2():
-    ymin, ymax = 0, 15000
+    ymin, ymax = 0, 50000
     df_ward2 = df[df["ku"] == area2]
     st.subheader("散布図")
     left, right = st.columns(2)
@@ -164,8 +164,8 @@ def analysis2():
         s2 = pd.Series(df["prices"])
         s3 = pd.Series(df_ward2[exp1])
         s4 = pd.Series(df_ward2["prices"])
-        st.write(s1.corr(s2))
-        st.write(s3.corr(s4))
+        st.write(round(s1.corr(s2), 2))
+        st.write(round(s3.corr(s4), 2))
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -187,8 +187,8 @@ def analysis2():
         else:
             exp1 = "prices"
         st.write("平均")
-        st.write(df[exp1].mean())
-        st.write(df_ward2[exp1].mean())
+        st.write(round(df[exp1].mean(), 2))
+        st.write(round(df_ward2[exp1].mean(), 2))
     with right:
         fig, ax = plt.subplots()
         plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
@@ -216,7 +216,7 @@ def analysis3():
             exp1 = "accesses"
         s1 = pd.Series(df_ward1[exp1])
         s2 = pd.Series(df_ward1["prices"])
-        st.write(s1.corr(s2))
+        st.write(round(s1.corr(s2), 2))
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -237,7 +237,7 @@ def analysis3():
         else:
             exp1 = "prices"
         st.write("平均")
-        st.write(df_ward1[exp1].mean())
+        st.write(round(df_ward1[exp1].mean(), 2))
     with right:
         fig, ax = plt.subplots()
         plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100)
@@ -266,8 +266,8 @@ def analysis4():
         s2 = pd.Series(df_ward1["prices"])
         s3 = pd.Series(df_ward2[exp1])
         s4 = pd.Series(df_ward2["prices"])
-        st.write(s1.corr(s2))
-        st.write(s3.corr(s4))
+        st.write(round(s1.corr(s2), 2))
+        st.write(round(s3.corr(s4), 2))
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -289,8 +289,8 @@ def analysis4():
         else:
             exp1 = "prices"
         st.write("平均")
-        st.write(df_ward1[exp1].mean())
-        st.write(df_ward2[exp1].mean())
+        st.write(round(df_ward1[exp1].mean(), 2))
+        st.write(round(df_ward2[exp1].mean(), 2))
     with right:
         fig, ax = plt.subplots()
         plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100)
