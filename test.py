@@ -129,50 +129,50 @@ def scatter():
         exp = st.selectbox("説明変数", variable)
         obj = st.selectbox("目的変数", variable)
         if exp == "面積(m2)":
-            exp = "sizes"
+            exp1 = "sizes"
             if obj == "面積(m2)":
-                obj = "sizes"
+                obj1 = "sizes"
             elif obj == "築年数":
-                obj = "yearss"
+                obj1 = "yearss"
             elif obj == "アクセス(分)":
-                obj = "accesses"
+                obj1 = "accesses"
             else:
-                obj = "prices"
+                obj1 = "prices"
         elif exp == "築年数":
-            exp = "yearss"
+            exp1 = "yearss"
             if obj == "面積(m2)":
-                obj = "sizes"
+                obj1 = "sizes"
             elif obj == "築年数":
-                obj = "yearss"
+                obj1 = "yearss"
             elif obj == "アクセス(分)":
-                obj = "accesses"
+                obj1 = "accesses"
             else:
-                obj = "prices"
+                obj1 = "prices"
         elif exp == "アクセス(分)":
-            exp = "accesses"
+            exp1 = "accesses"
             if obj == "面積(m2)":
-                obj = "sizes"
+                obj1 = "sizes"
             elif obj == "築年数":
-                obj = "yearss"
+                obj1 = "yearss"
             elif obj == "アクセス(分)":
-                obj = "accesses"
+                obj1 = "accesses"
             else:
-                obj = "prices"
+                obj1 = "prices"
         else:
-            exp = "prices"
+            exp1 = "prices"
             if obj == "面積(m2)":
-                obj = "sizes"
+                obj1 = "sizes"
             elif obj == "築年数":
-                obj = "yearss"
+                obj1 = "yearss"
             elif obj == "アクセス(分)":
-                obj = "accesses"
+                obj1 = "accesses"
             else:
-                obj = "prices"  
+                obj1 = "prices"  
     with right:
         fig, ax = plt.subplots()
-        ax.scatter(df[exp], df[obj], alpha=0.4, color="dodgerblue",s=10)
-        plt.xlabel("面積(m2)")
-        plt.ylabel("家賃(万円)")
+        ax.scatter(df[exp1], df[obj1], alpha=0.4, color="dodgerblue",s=10)
+        plt.xlabel(obj)
+        plt.ylabel(exp)
         plt.legend()
         st.pyplot(fig)
 
