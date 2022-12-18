@@ -115,7 +115,7 @@ def analysis1():
             exp1 = "accesses"
         s1 = pd.Series(df[exp1])
         s2 = pd.Series(df["prices"])
-        st.write(s1.corr(s2))
+        st.write(round(s1.corr(s2), 2))
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -136,7 +136,7 @@ def analysis1():
         else:
             exp1 = "prices"
         st.write("平均")
-        st.write(df[exp1].mean())
+        st.write(round(df[exp1].mean(), 2))
     with right:
         fig, ax = plt.subplots()
         plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
