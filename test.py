@@ -81,46 +81,6 @@ elif madori == "1K":
 else:
     madori = "tokyo_1ldk"
 
-query = f"""
-    WITH data_with_ku AS (
-    SELECT
-    *,
-    CASE 
-        WHEN address LIKE '%千代田区%' THEN '千代田区' 
-        WHEN address LIKE '%中央区%' THEN '中央区' 
-        WHEN address LIKE '%港区%' THEN '港区' 
-        WHEN address LIKE '%新宿区%' THEN '新宿区' 
-        WHEN address LIKE '%文京区%' THEN '文京区' 
-        WHEN address LIKE '%台東区%' THEN '台東区' 
-        WHEN address LIKE '%墨田区%' THEN '墨田区' 
-        WHEN address LIKE '%江東区%' THEN '江東区' 
-        WHEN address LIKE '%品川区%' THEN '品川区' 
-        WHEN address LIKE '%目黒区%' THEN '目黒区' 
-        WHEN address LIKE '%大田区%' THEN '大田区' 
-        WHEN address LIKE '%世田谷区%' THEN '世田谷区' 
-        WHEN address LIKE '%渋谷区%' THEN '渋谷区' 
-        WHEN address LIKE '%中野区%' THEN '中野区' 
-        WHEN address LIKE '%杉並区%' THEN '杉並区' 
-        WHEN address LIKE '%豊島区%' THEN '豊島区' 
-        WHEN address LIKE '%北区%' THEN '北区' 
-        WHEN address LIKE '%荒川区%' THEN '荒川区' 
-        WHEN address LIKE '%板橋区%' THEN '板橋区' 
-        WHEN address LIKE '%練馬区%' THEN '練馬区' 
-        WHEN address LIKE '%足立区%' THEN '足立区' 
-        WHEN address LIKE '%葛飾区%' THEN '葛飾区' 
-        WHEN address LIKE '%江戸川区%' THEN '江戸川区' 
-    END AS ku
-    FROM
-        `prediction-rent-price.dataset1.{madori}`
-    )
-    SELECT
-    *
-    FROM
-    data_with_ku
-    ;"""
-
-data = client.query(query).to_dataframe()
-df = pd.DataFrame(data)
 
 def select_var():
     st.subheader("散布図")
@@ -176,8 +136,49 @@ def select_var():
 #     st.pyplot(fig)
 
 def analysis_23(madori):
-            
+    
     st.subheader("23区の家賃平均比較")
+    query = f"""
+    WITH data_with_ku AS (
+    SELECT
+    *,
+    CASE 
+        WHEN address LIKE '%千代田区%' THEN '千代田区' 
+        WHEN address LIKE '%中央区%' THEN '中央区' 
+        WHEN address LIKE '%港区%' THEN '港区' 
+        WHEN address LIKE '%新宿区%' THEN '新宿区' 
+        WHEN address LIKE '%文京区%' THEN '文京区' 
+        WHEN address LIKE '%台東区%' THEN '台東区' 
+        WHEN address LIKE '%墨田区%' THEN '墨田区' 
+        WHEN address LIKE '%江東区%' THEN '江東区' 
+        WHEN address LIKE '%品川区%' THEN '品川区' 
+        WHEN address LIKE '%目黒区%' THEN '目黒区' 
+        WHEN address LIKE '%大田区%' THEN '大田区' 
+        WHEN address LIKE '%世田谷区%' THEN '世田谷区' 
+        WHEN address LIKE '%渋谷区%' THEN '渋谷区' 
+        WHEN address LIKE '%中野区%' THEN '中野区' 
+        WHEN address LIKE '%杉並区%' THEN '杉並区' 
+        WHEN address LIKE '%豊島区%' THEN '豊島区' 
+        WHEN address LIKE '%北区%' THEN '北区' 
+        WHEN address LIKE '%荒川区%' THEN '荒川区' 
+        WHEN address LIKE '%板橋区%' THEN '板橋区' 
+        WHEN address LIKE '%練馬区%' THEN '練馬区' 
+        WHEN address LIKE '%足立区%' THEN '足立区' 
+        WHEN address LIKE '%葛飾区%' THEN '葛飾区' 
+        WHEN address LIKE '%江戸川区%' THEN '江戸川区' 
+    END AS ku
+    FROM
+        `prediction-rent-price.dataset1.{madori}`
+    )
+    SELECT
+    *
+    FROM
+    data_with_ku
+    ;"""
+
+    data = client.query(query).to_dataframe()
+    df = pd.DataFrame(data)
+
     left, right = st.columns(2)
     with left:
         df = pd.pivot_table(df, index="ku", values="prices")
