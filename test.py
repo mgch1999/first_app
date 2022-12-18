@@ -110,7 +110,7 @@ def scatter(area1, area2):
                 exp1 = "accesses"
             s1 = pd.Series(df[exp1])
             s2 = pd.Series(df["prices"])
-            st.write(s1.corr(s2))
+            st.write("相関係数"+s1.corr(s2))
         with right:
             fig, ax = plt.subplots()
             ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -135,8 +135,8 @@ def scatter(area1, area2):
             s2 = pd.Series(df["prices"])
             s3 = pd.Series(df_ward2[exp1])
             s4 = pd.Series(df_ward2["prices"])
-            st.write(s1.corr(s2))
-            st.write(s3.corr(s4))
+            st.write("相関係数(全体)"+s1.corr(s2))
+            st.write(f"相関係数({area2})"+s3.corr(s4))
         with right:
             fig, ax = plt.subplots()
             ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
