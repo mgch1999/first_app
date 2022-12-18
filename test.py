@@ -93,6 +93,7 @@ df = pd.DataFrame(data)
 def analysis1():
     ymin, ymax = 0, 50000
     left, right = st.columns(2)
+    st.subheader("23区家賃平均")
     with left:
         avg = pd.pivot_table(df, index="ku", values="prices")
         avg = avg.sort_values("prices", ascending=False)
@@ -100,6 +101,7 @@ def analysis1():
     with right:
         fig, ax = plt.subplots()
         ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
+        plt.title("家賃平均グラフ")
         plt.xticks(rotation=50)
         st.pyplot(fig)
     st.subheader("散布図")
