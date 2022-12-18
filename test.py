@@ -81,64 +81,7 @@ elif madori == "1K":
 else:
     madori = "tokyo_1ldk"
 
-
-def select_var():
-    st.subheader("散布図")
-    exp = st.selectbox("説明変数", variable)
-    obj = st.selectbox("目的変数", variable)
-    if exp == "面積(m2)":
-        exp = "sizes"
-        if obj == "面積(m2)":
-            obj = "sizes"
-        elif obj == "築年数":
-            obj = "yearss"
-        elif obj == "アクセス(分)":
-            obj = "accesses"
-        else:
-            obj = "prices"
-    elif exp == "築年数":
-        exp = "yearss"
-        if obj == "面積(m2)":
-            obj = "sizes"
-        elif obj == "築年数":
-            obj = "yearss"
-        elif obj == "アクセス(分)":
-            obj = "accesses"
-        else:
-            obj = "prices"
-    elif exp == "アクセス(分)":
-        exp = "accesses"
-        if obj == "面積(m2)":
-            obj = "sizes"
-        elif obj == "築年数":
-            obj = "yearss"
-        elif obj == "アクセス(分)":
-            obj = "accesses"
-        else:
-            obj = "prices"
-    else:
-        exp = "prices"
-        if obj == "面積(m2)":
-            obj = "sizes"
-        elif obj == "築年数":
-            obj = "yearss"
-        elif obj == "アクセス(分)":
-            obj = "accesses"
-        else:
-            obj = "prices"
-
-# def scatter_plot(exp ,obj):
-#     fig, ax = plt.subplots()
-#     ax.scatter(df[exp], df[obj], alpha=0.4, color="dodgerblue",s=10)
-#     plt.xlabel("面積(m2)")
-#     plt.ylabel("家賃(万円)")
-#     plt.legend()
-#     st.pyplot(fig)
-
-def analysis_23(madori):
-    
-    st.subheader("23区の家賃平均比較")
-    query = f"""
+query = f"""
     WITH data_with_ku AS (
     SELECT
     *,
@@ -176,25 +119,82 @@ def analysis_23(madori):
     data_with_ku
     ;"""
 
-    data = client.query(query).to_dataframe()
-    df = pd.DataFrame(data)
+data = client.query(query).to_dataframe()
+df = pd.DataFrame(data)
 
+def scatter():
+    st.subheader("散布図")
     left, right = st.columns(2)
     with left:
-        df = pd.pivot_table(df, index="ku", values="prices")
-        df = df.sort_values("prices", ascending=False)
-        st.table(df.style.format('{:.1f}'))
+        exp = st.selectbox("説明変数", variable)
+        obj = st.selectbox("目的変数", variable)
+        if exp == "面積(m2)":
+            exp = "sizes"
+            if obj == "面積(m2)":
+                obj = "sizes"
+            elif obj == "築年数":
+                obj = "yearss"
+            elif obj == "アクセス(分)":
+                obj = "accesses"
+            else:
+                obj = "prices"
+        elif exp == "築年数":
+            exp = "yearss"
+            if obj == "面積(m2)":
+                obj = "sizes"
+            elif obj == "築年数":
+                obj = "yearss"
+            elif obj == "アクセス(分)":
+                obj = "accesses"
+            else:
+                obj = "prices"
+        elif exp == "アクセス(分)":
+            exp = "accesses"
+            if obj == "面積(m2)":
+                obj = "sizes"
+            elif obj == "築年数":
+                obj = "yearss"
+            elif obj == "アクセス(分)":
+                obj = "accesses"
+            else:
+                obj = "prices"
+        else:
+            exp = "prices"
+            if obj == "面積(m2)":
+                obj = "sizes"
+            elif obj == "築年数":
+                obj = "yearss"
+            elif obj == "アクセス(分)":
+                obj = "accesses"
+            else:
+                obj = "prices"  
     with right:
         fig, ax = plt.subplots()
-        ax.bar(df.index, height=df["prices"], color="dodgerblue")
-        plt.xticks(rotation=50)
+        ax.scatter(df[exp], df[obj], alpha=0.4, color="dodgerblue",s=10)
+        plt.xlabel("面積(m2)")
+        plt.ylabel("家賃(万円)")
+        plt.legend()
         st.pyplot(fig)
 
-    left, right = st.columns(2)
-    with left:
-        select_var()
-    with right:
-        st.write("a")
+def analysis_23(madori):
+
+    st.dataframe(df)
+
+    # left, right = st.columns(2)
+    # with left:
+    #     df = pd.pivot_table(df, index="ku", values="prices")
+    #     df = df.sort_values("prices", ascending=False)
+    #     st.table(df.style.format('{:.1f}'))
+    # with right:
+    #     fig, ax = plt.subplots()
+    #     ax.bar(df.index, height=df["prices"], color="dodgerblue")
+    #     plt.xticks(rotation=50)
+    #     st.pyplot(fig)
+
+    # scatter()
+    
+
+        
 
 
 def analysis(madori):
