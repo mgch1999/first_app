@@ -178,15 +178,14 @@ def scatter():
 
 def analysis_23(madori):
 
-    df = df
     left, right = st.columns(2)
     with left:
-        df = pd.pivot_table(df, index="ku", values="prices")
-        df = df.sort_values("prices", ascending=False)
-        st.table(df.style.format('{:.1f}'))
+        avg = pd.pivot_table(df, index="ku", values="prices")
+        avg = avg.sort_values("prices", ascending=False)
+        st.table(avg.style.format('{:.1f}'))
     with right:
         fig, ax = plt.subplots()
-        ax.bar(df.index, height=df["prices"], color="dodgerblue")
+        ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
         plt.xticks(rotation=50)
         st.pyplot(fig)
 
