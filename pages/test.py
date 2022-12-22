@@ -128,7 +128,6 @@ def analysis1():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
-    st.subheader("ヒストグラム")
     left, right = st.columns(2)
     with left:
         exp = st.selectbox("変数", variable2)
@@ -161,7 +160,6 @@ def analysis2():
     df_ward2 = df[df["ku"] == area2]
     left, middle1, middle2, right = st.columns(4)
     with left:
-        st.subheader("散布図")
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
         if exp == "面積(m2)":
@@ -187,9 +185,7 @@ def analysis2():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
-    st.subheader("ヒストグラム")
     with middle2:
-        st.subheader("ヒストグラム")
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
@@ -224,7 +220,6 @@ def analysis3():
     df_ward1 = df[df["ku"] == area1]
     left, middle1, middle2, right = st.columns(4)
     with left:
-        st.subheader("散布図")
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
         if exp == "面積(m2)":
@@ -246,7 +241,6 @@ def analysis3():
         plt.legend()
         st.pyplot(fig)
     with middle2:
-        st.subheader("ヒストグラム")
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
@@ -278,7 +272,6 @@ def analysis4():
     df_ward2 = df[df["ku"] == area2]
     left, middle1, middle2, right = st.columns(4)
     with left:
-        st.subheader("散布図")
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
         if exp == "面積(m2)":
@@ -305,7 +298,6 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     with middle2:
-        st.subheader("ヒストグラム")
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
