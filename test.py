@@ -193,20 +193,24 @@ def analysis2():
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
+            unit = "m2"
         elif exp == "築年数":
             exp1 = "yearss"
+            unit = "年"
         elif exp == "アクセス(分)":
             exp1 = "accesses"
+            unit = "分"
         else:
             exp1 = "prices"
+            unit = "万円"
         st.write("平均")
         avg1 = round(df[exp1].mean(), 2)
         avg2 = round(df_ward2[exp1].mean(), 2)
-        st.write(f"{area1}:{avg1}")
-        st.write(f"{area2}:{avg2}")
+        st.write(f"{area1}:{avg1}{unit}")
+        st.write(f"{area2}:{avg2}{unit}")
     with right:
         fig, ax = plt.subplots()
-        plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100, lanel=area1)
+        plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
         plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100, label=area2)
         plt.vlines(df[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
         plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
