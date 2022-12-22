@@ -118,7 +118,8 @@ def analysis1():
         s1 = pd.Series(df[exp1])
         s2 = pd.Series(df["prices"])
         st.write("相関係数")
-        st.write(round(s1.corr(s2), 2))
+        corr1 = round(s1.corr(s2), 2)
+        st.write(f"{corr1}")
     with right:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
@@ -139,7 +140,8 @@ def analysis1():
         else:
             exp1 = "prices"
         st.write("平均")
-        st.write(round(df[exp1].mean(), 2))
+        avg1 = round(df[exp1].mean(), 2)
+        st.write(f"{avg1}")
     with right:
         fig, ax = plt.subplots()
         plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
