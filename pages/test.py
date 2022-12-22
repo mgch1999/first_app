@@ -38,9 +38,9 @@ ward2 = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "�
 variable1 = ["面積(m2)", "築年数", "アクセス(分)"]
 variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 
-area1 = st.selectbox("エリア選択", ward1)
-area2 = st.selectbox("比較エリア選択", ward2)
-madori = st.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
+area1 = st.sidebar.selectbox("エリア選択", ward1)
+area2 = st.sidebar.selectbox("比較エリア選択", ward2)
+madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
 
 if madori =="ワンルーム":
     madori = "tokyo_1r"
