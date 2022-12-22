@@ -322,7 +322,7 @@ def analysis4():
             exp1 = "prices"
             unit = "万円"
         st.write("平均")
-        avg1 = round(df[exp1].mean(), 2)
+        avg1 = round(df_ward1[exp1].mean(), 2)
         avg2 = round(df_ward2[exp1].mean(), 2)
         st.write(f"{area1}:{avg1}{unit}")
         st.write(f"{area2}:{avg2}{unit}")
