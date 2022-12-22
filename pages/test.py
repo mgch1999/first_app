@@ -41,6 +41,7 @@ variable2 = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 area1 = st.sidebar.selectbox("エリア選択", ward1)
 area2 = st.sidebar.selectbox("比較エリア選択", ward2)
 madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
+hennsuu = st.sidebar.selectbox("変数選択", variable2)
 
 if madori =="ワンルーム":
     madori = "tokyo_1r"
@@ -270,62 +271,91 @@ def analysis4():
     ymin, ymax = 0, 1500
     df_ward1 = df[df["ku"] == area1]
     df_ward2 = df[df["ku"] == area2]
-    left, middle1, middle2, right = st.columns(4)
+    left, right = st.columns(2)
     with left:
-        exp = st.selectbox("説明変数", variable1)
-        st.write("目的変数:家賃(万円)")
-        if exp == "面積(m2)":
-            exp1 = "sizes"
-        elif exp == "築年数":
-            exp1 = "yearss"
+        st.write("散布図")
+        if hennsuu == "面積(m2)":
+            hennsuu1 = "sizes"
+        elif hennsuu == "築年数":
+            hennsuu1 = "yearss"
         else:
-            exp1 = "accesses"
-        s1 = pd.Series(df_ward1[exp1])
-        s2 = pd.Series(df_ward1["prices"])
-        s3 = pd.Series(df_ward2[exp1])
-        s4 = pd.Series(df_ward2["prices"])
-        st.write("相関係数")
-        corr1 = round(s1.corr(s2), 2)
-        corr2 = round(s3.corr(s4), 2)
-        st.write(f"{area1}:{corr1}")
-        st.write(f"{area2}:{corr2}")
-    with middle1:
+            hennsuu = "accesses"
         fig, ax = plt.subplots()
-        ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
-        plt.xlabel(exp)
+        ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
+        plt.xlabel(hennsuu)
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
-    with middle2:
-        exp = st.selectbox("変数", variable2)
-        if exp == "面積(m2)":
-            exp1 = "sizes"
-            unit = "m2"
-        elif exp == "築年数":
-            exp1 = "yearss"
-            unit = "年"
-        elif exp == "アクセス(分)":
-            exp1 = "accesses"
-            unit = "分"
-        else:
-            exp1 = "prices"
-            unit = "万円"
-        st.write("平均")
-        avg1 = round(df_ward1[exp1].mean(), 2)
-        avg2 = round(df_ward2[exp1].mean(), 2)
-        st.write(f"{area1}:{avg1}{unit}")
-        st.write(f"{area2}:{avg2}{unit}")
     with right:
+        st.write("ヒストグラム")
         fig, ax = plt.subplots()
-        plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100, label=area2)
-        plt.vlines(df_ward1[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-        plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
-        plt.xlabel(exp)
+        plt.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+        plt.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
+        plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+        plt.xlabel(hennsuu)
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
+
+
+
+    # with left:
+    #     exp = st.selectbox("説明変数", variable1)
+    #     st.write("目的変数:家賃(万円)")
+    #     if exp == "面積(m2)":
+    #         exp1 = "sizes"
+    #     elif exp == "築年数":
+    #         exp1 = "yearss"
+    #     else:
+    #         exp1 = "accesses"
+    #     s1 = pd.Series(df_ward1[exp1])
+    #     s2 = pd.Series(df_ward1["prices"])
+    #     s3 = pd.Series(df_ward2[exp1])
+    #     s4 = pd.Series(df_ward2["prices"])
+    #     st.write("相関係数")
+    #     corr1 = round(s1.corr(s2), 2)
+    #     corr2 = round(s3.corr(s4), 2)
+    #     st.write(f"{area1}:{corr1}")
+    #     st.write(f"{area2}:{corr2}")
+    # with middle1:
+    #     fig, ax = plt.subplots()
+    #     ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+    #     ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
+    #     plt.xlabel(exp)
+    #     plt.ylabel("家賃")
+    #     plt.legend()
+    #     st.pyplot(fig)
+    # with middle2:
+    #     exp = st.selectbox("変数", variable2)
+    #     if exp == "面積(m2)":
+    #         exp1 = "sizes"
+    #         unit = "m2"
+    #     elif exp == "築年数":
+    #         exp1 = "yearss"
+    #         unit = "年"
+    #     elif exp == "アクセス(分)":
+    #         exp1 = "accesses"
+    #         unit = "分"
+    #     else:
+    #         exp1 = "prices"
+    #         unit = "万円"
+    #     st.write("平均")
+    #     avg1 = round(df_ward1[exp1].mean(), 2)
+    #     avg2 = round(df_ward2[exp1].mean(), 2)
+    #     st.write(f"{area1}:{avg1}{unit}")
+    #     st.write(f"{area2}:{avg2}{unit}")
+    # with right:
+    #     fig, ax = plt.subplots()
+    #     plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+    #     plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100, label=area2)
+    #     plt.vlines(df_ward1[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+    #     plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+    #     plt.xlabel(exp)
+    #     plt.ylabel("物件数")
+    #     plt.legend()
+    #     st.pyplot(fig)
 class Select():
     def __init__(self, area1, area2):
         self.area1 = area1
