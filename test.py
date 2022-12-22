@@ -100,7 +100,8 @@ def analysis1():
         st.table(avg.style.format('{:.1f}'))
     with right:
         fig, ax = plt.subplots()
-        ax.bar(avg.index, height=avg["prices"], color="dodgerblue")
+        ax.bar(avg.index, height=avg["prices"], color="dodgerblue", label=area1)
+        plt.legend()
         plt.title("家賃平均グラフ")
         plt.xticks(rotation=50)
         st.pyplot(fig)
@@ -122,7 +123,7 @@ def analysis1():
         st.write(f"{corr1}")
     with right:
         fig, ax = plt.subplots()
-        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10)
+        ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         plt.xlabel(exp)
         plt.ylabel("家賃")
         plt.legend()
@@ -133,15 +134,19 @@ def analysis1():
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
+            unit = "m2"
         elif exp == "築年数":
             exp1 = "yearss"
+            unit = "年"
         elif exp == "アクセス(分)":
             exp1 = "accesses"
+            unit = "分"
         else:
             exp1 = "prices"
+            unit = "万円"
         st.write("平均")
         avg1 = round(df[exp1].mean(), 2)
-        st.write(f"{avg1}")
+        st.write(f"{avg1}{unit}")
     with right:
         fig, ax = plt.subplots()
         plt.hist(df[exp1],alpha=0.4, color="dodgerblue", bins=100)
