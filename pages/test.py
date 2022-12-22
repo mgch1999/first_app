@@ -160,7 +160,7 @@ def analysis2():
     ymin, ymax = 0, 50000
     df_ward2 = df[df["ku"] == area2]
     st.subheader("散布図")
-    left, right = st.columns(2)
+    left, middle1, middle2, right = st.columns(4)
     with left:
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
@@ -179,7 +179,7 @@ def analysis2():
         corr2 = round(s3.corr(s4), 2)
         st.write(f"{area1}:{corr1}")
         st.write(f"{area2}:{corr2}")
-    with right:
+    with middle1:
         fig, ax = plt.subplots()
         ax.scatter(df[exp1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
@@ -188,8 +188,7 @@ def analysis2():
         plt.legend()
         st.pyplot(fig)
     st.subheader("ヒストグラム")
-    left, right = st.columns(2)
-    with left:
+    with middle2:
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
@@ -223,7 +222,7 @@ def analysis3():
     ymin, ymax = 0, 1500
     df_ward1 = df[df["ku"] == area1]
     st.subheader("散布図")
-    left, right = st.columns(2)
+    left, middle1, middle2, right = st.columns(4)
     with left:
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
@@ -238,7 +237,7 @@ def analysis3():
         st.write("相関係数")
         corr1 = round(s1.corr(s2), 2)
         st.write(f"{corr1}")
-    with right:
+    with middle1:
         fig, ax = plt.subplots()
         ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         plt.xlabel(exp)
@@ -246,8 +245,7 @@ def analysis3():
         plt.legend()
         st.pyplot(fig)
     st.subheader("ヒストグラム")
-    left, right = st.columns(2)
-    with left:
+    with middle2:
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
@@ -278,7 +276,7 @@ def analysis4():
     df_ward1 = df[df["ku"] == area1]
     df_ward2 = df[df["ku"] == area2]
     st.subheader("散布図")
-    left, right = st.columns(2)
+    left, middle1, middle2, right = st.columns(4)
     with left:
         exp = st.selectbox("説明変数", variable1)
         st.write("目的変数:家賃(万円)")
@@ -297,7 +295,7 @@ def analysis4():
         corr2 = round(s3.corr(s4), 2)
         st.write(f"{area1}:{corr1}")
         st.write(f"{area2}:{corr2}")
-    with right:
+    with middle1:
         fig, ax = plt.subplots()
         ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
@@ -306,8 +304,7 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     st.subheader("ヒストグラム")
-    left, right = st.columns(2)
-    with left:
+    with middle2:
         exp = st.selectbox("変数", variable2)
         if exp == "面積(m2)":
             exp1 = "sizes"
