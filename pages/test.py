@@ -50,6 +50,13 @@ elif madori == "1K":
 else:
     madori = "tokyo_1ldk"
 
+if hennsuu == "面積(m2)":
+    hennsuu1 = "sizes"
+elif hennsuu == "築年数":
+    hennsuu1 = "yearss"
+else:
+    hennsuu = "accesses"
+
 query = f"""
     WITH data_with_ku AS (
     SELECT
@@ -274,12 +281,6 @@ def analysis4():
     left, right = st.columns(2)
     with left:
         st.write("散布図")
-        if hennsuu == "面積(m2)":
-            hennsuu1 = "sizes"
-        elif hennsuu == "築年数":
-            hennsuu1 = "yearss"
-        else:
-            hennsuu = "accesses"
         fig, ax = plt.subplots()
         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
