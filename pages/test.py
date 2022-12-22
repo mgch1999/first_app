@@ -54,8 +54,11 @@ if hennsuu == "面積(m2)":
     hennsuu1 = "sizes"
 elif hennsuu == "築年数":
     hennsuu1 = "yearss"
+elif hennsuu == "アクセス(分)":
+    hennsuu1 = "accesses"
 else:
-    hennsuu = "accesses"
+    hennsuu1 = "prices"
+
 
 query = f"""
     WITH data_with_ku AS (
