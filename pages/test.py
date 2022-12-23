@@ -304,7 +304,7 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     with left:
-        bins = np.linspace(0, 20, 2.5)
+        bins = np.linspace(0, 20, 2)
         freq = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
         dist = pd.DataFrame({"度数":freq}, index=freq.index)
         st.dataframe(dist)
