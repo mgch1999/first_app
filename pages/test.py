@@ -312,7 +312,7 @@ def analysis4():
         st.dataframe(freq)
     with right:
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(10, 6))
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data, height=0.3)
