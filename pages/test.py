@@ -315,7 +315,7 @@ def analysis4():
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
-            bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data, height=0.5)
+            bar_list = ax.barh(freq.columns, freq.iloc[i],alpha=0.5, left=left_data, height=0.5)
             left_data += freq.iloc[i]
         ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=10)
         plt.xlim([0, 1])
