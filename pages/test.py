@@ -311,6 +311,7 @@ def analysis4():
         st.dataframe(freq["prices"])
     with right:
         fig, ax = plt.subplots()
+        left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data)
             left_data += freq.iloc[i]
