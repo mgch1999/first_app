@@ -311,9 +311,11 @@ def analysis4():
         freq2 = df_ward2[hennsuu1].value_counts(bins=bins, sort=False)
         st.dataframe(freq2)
     with right:
-        fig, ax = plt.subplots()
-        ax.pie(freq1, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
-        ax.pie(freq2, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
+        fig = plt.figure()
+        ax1 = fig.add_subplot()
+        ax1.pie(freq1, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
+        ax2 = fig.add_subplot()
+        ax2.pie(freq2, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
         st.pyplot(fig)
 
 
