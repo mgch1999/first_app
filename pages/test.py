@@ -311,10 +311,13 @@ def analysis4():
         st.dataframe(freq["prices"])
     with right:
         fig, ax = plt.subplots()
-        for i in range(len(freq)):
-            ax.bar(freq.columns, freq.iloc[i], bottom=freq.iloc[:i].sum())
+        for i in range(len(freq.index)):
+            bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data)
+            left_data += freq.iloc[i]
+        ax.set_xlim([0,100])
+        ax.set_yticks(freq)
+        ax.set_yticklabels(freq.columns)
         st.pyplot(fig)
-
         
     
 
