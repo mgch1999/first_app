@@ -288,9 +288,7 @@ def analysis4():
         avg = avg.sort_values(hennsuu1, ascending=False)
         fig, ax = plt.subplots()
         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-        for i in range(len(bar_list)):
-            if bar_list[i] == area1:
-                bar_list[i].set_color("dodgerblue")
+        bar_list[i].set_color("dodgerblue")
         plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
