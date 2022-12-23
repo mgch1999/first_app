@@ -301,7 +301,7 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     left, right = st.columns(2)
-    with right:
+    with left:
         plt.title("ヒストグラム")
         fig, ax = plt.subplots()
         plt.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
@@ -312,7 +312,7 @@ def analysis4():
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
-    with left:
+    with right:
         bins = np.arange(0, 30, 3)
         freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False),
                              f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False)})
