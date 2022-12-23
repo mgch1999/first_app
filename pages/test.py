@@ -313,11 +313,10 @@ def analysis4():
     with right:
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
         cm = plt.get_cmap("gist_rainbow")
-        color_maps = [cm(0.1), cm(0.2), cm(0.3), cm(0.4), cm(0.5), cm(0.6), cm(0.7), cm(0.8), cm(0.9)]
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
-            bar_list = ax.barh(freq.columns, freq.iloc[i], color=color_maps, left=left_data, height=0.5)
+            bar_list = ax.barh(freq.columns, freq.iloc[i], color=cm, left=left_data, height=0.5)
             left_data += freq.iloc[i]
         ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=10)
         plt.xlim([0, 1])
