@@ -303,10 +303,16 @@ def analysis4():
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
+    left, right = st.columns(2)
     with left:
         bins = np.arange(0, 30, 3)
         freq = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
         st.dataframe(freq)
+    with right:
+        fig, ax = plt.subplots()
+        ax.pie(freq, counterclock=False, startangle=90)
+        st.pyplot(fig)
+
 
 
     # with left:
