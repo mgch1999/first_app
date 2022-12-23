@@ -309,15 +309,13 @@ def analysis4():
         freq = pd.DataFrame({f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False),
                              f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False)})
         st.dataframe(freq)
-        
-        
-    # with right:
-    #     fig, ax = plt.subplots()
-    #     left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
-    #     for i in range(len(freq.index)):
-    #         bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data)
-    #         left_data += freq.iloc[i]
-    #     st.pyplot(fig)
+    with right:
+        fig, ax = plt.subplots()
+        left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
+        for i in range(len(freq.index)):
+            bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data)
+            left_data += freq.iloc[i]
+        st.pyplot(fig)
         
     
 
