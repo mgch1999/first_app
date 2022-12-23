@@ -287,7 +287,7 @@ def analysis4():
         avg = pd.pivot_table(df, index="ku", values=hennsuu1)
         avg = avg.sort_values(hennsuu1, ascending=False)
         fig, ax = plt.subplots()
-        ax.bar(avg.index, height=hennsuu1, color="dodgerblue")
+        ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
         plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
@@ -317,7 +317,6 @@ def analysis4():
         freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False),
                              f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
-        st.dataframe(freq)
         colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
         fig, ax = plt.subplots()
