@@ -9,6 +9,7 @@ import pandas as pd
 import googlemaps
 import matplotlib.pyplot as plt
 import japanize_matplotlib
+import numpy as np
 
 st.set_page_config(layout="wide",
                    initial_sidebar_state="auto")
@@ -302,7 +303,11 @@ def analysis4():
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
-
+    with left:
+        bins = np.linspace(0, 20, 2.5)
+        freq = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
+        dist = pd.DataFrame({"度数":freq}, index=freq.index)
+        st.dataframe(dist)
 
 
     # with left:
