@@ -310,7 +310,7 @@ def analysis4():
         st.dataframe(freq)
     with right:
         fig, ax = plt.subplots()
-        ax.pie(freq, counterclock=False, startangle=90)
+        ax.pie(freq, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
         st.pyplot(fig)
 
 
