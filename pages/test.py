@@ -312,7 +312,7 @@ def analysis4():
     with right:
         fig, ax = plt.subplots()
         for i in range(len(freq)):
-            ax.barh(freq.columns, freq.iloc[i], bottom=freq.iloc[:i].sum())
+            ax.bar(freq.columns, freq.iloc[i], bottom=freq.iloc[:i].sum())
         st.pyplot(fig)
 
         
