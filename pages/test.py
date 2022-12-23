@@ -287,7 +287,10 @@ def analysis4():
         avg = pd.pivot_table(df, index="ku", values=hennsuu1)
         avg = avg.sort_values(hennsuu1, ascending=False)
         fig, ax = plt.subplots()
-        ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
+        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
+        for i in range(len(bar_list)):
+            if bar_list[i] == area1:
+                bar_list[i].set_color("dodgerblue")
         plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
@@ -302,8 +305,8 @@ def analysis4():
         st.pyplot(fig)
     left, right = st.columns(2)
     with left:
-        plt.title("ヒストグラム")
         fig, ax = plt.subplots()
+        plt.title("ヒストグラム")
         plt.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
         plt.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
         plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
