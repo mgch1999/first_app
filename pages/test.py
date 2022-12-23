@@ -283,17 +283,26 @@ def analysis4():
     df_ward1 = df[df["ku"] == area1]
     df_ward2 = df[df["ku"] == area2]
     left, right = st.columns(2)
-    with left:
-        st.write("散布図")
+    with right:
+        avg = pd.pivot_table(df, index="ku", values=hennsuu1)
+        avg = avg.sort_values(hennsuu1, ascending=False)
         fig, ax = plt.subplots()
+        ax.bar(avg.index, height=hennsuu1, color="dodgerblue")
+        plt.legend()
+        plt.xticks(rotation=50)
+        st.pyplot(fig)
+    with left:
+        fig, ax = plt.subplots()
+        plt.title("散布図")
         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
         plt.xlabel(hennsuu)
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+    left, right = st.columns(2)
     with right:
-        st.write("ヒストグラム")
+        plt.title("ヒストグラム")
         fig, ax = plt.subplots()
         plt.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
         plt.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
@@ -303,14 +312,12 @@ def analysis4():
         plt.ylabel("物件数")
         plt.legend()
         st.pyplot(fig)
-    left, right = st.columns(2)
     with left:
         bins = np.arange(0, 30, 3)
         freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False),
                              f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         st.dataframe(freq)
-    with right:
         colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
         fig, ax = plt.subplots()
