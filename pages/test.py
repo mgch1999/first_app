@@ -308,7 +308,7 @@ def analysis4():
         bins = np.arange(0, 30, 3)
         freq = pd.DataFrame({f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False),
                              f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False)})
-        st.dataframe(freq)
+        freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
     with right:
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
