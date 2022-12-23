@@ -317,7 +317,7 @@ def analysis4():
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data, height=0.5)
             left_data += freq.iloc[i]
-        ax.legend(label, loc="upper center",  bbox_to_anchor=(.5, -.15))
+        ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=10)
         plt.xlim([0, 1])
         st.pyplot(fig)
         
