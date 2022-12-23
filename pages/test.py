@@ -309,6 +309,11 @@ def analysis4():
         freq = pd.DataFrame(df_ward1[hennsuu1].value_counts(bins=bins, sort=False))
         freq["prices"] = freq["prices"]/freq["prices"].sum()
         st.dataframe(freq["prices"])
+    with right:
+        fig, ax = plt.subplots()
+        for i in range(len(freq)):
+            ax.barh(freq.columns, freq.iloc[i], bottom=freq.iloc[:i].sum())
+        st.pyplot(fig)
 
         
     
