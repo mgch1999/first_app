@@ -292,6 +292,8 @@ def analysis4():
         for i in range(len(avg)):
             if ai[i] == area1:
                 bar_list[i].set_color("dodgerblue")
+            elif ai[i] == area2:
+                bar_list[i].set_color("orange")
         plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
