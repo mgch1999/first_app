@@ -316,6 +316,7 @@ def analysis4():
         ax1.pie(freq1, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
         ax2 = fig.add_subplot()
         ax2.pie(freq2, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
+        fig.tight_layout()
         st.pyplot(fig)
 
 
