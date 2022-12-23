@@ -283,10 +283,11 @@ def analysis4():
     df_ward1 = df[df["ku"] == area1]
     df_ward2 = df[df["ku"] == area2]
     left, right = st.columns(2)
-    with right:
+    with left:
         avg = pd.pivot_table(df, index="ku", values=hennsuu1)
         avg = avg.sort_values(hennsuu1, ascending=False)
         fig, ax = plt.subplots()
+        plt.title(f"平均{hennsuu}")
         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
         ai = avg.index
         for i in range(len(avg)):
@@ -297,7 +298,7 @@ def analysis4():
         plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
-    with left:
+    with right:
         fig, ax = plt.subplots()
         plt.title("散布図")
         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
@@ -330,7 +331,7 @@ def analysis4():
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
             left_data += freq.iloc[i]
-        ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=10)
+        ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=20)
         plt.xlim([0, 1])
         st.pyplot(fig)
         
