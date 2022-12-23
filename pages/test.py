@@ -306,12 +306,16 @@ def analysis4():
     left, right = st.columns(2)
     with left:
         bins = np.arange(0, 30, 3)
-        freq = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
-        st.dataframe(freq)
+        freq1 = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
+        st.dataframe(freq1)
+        freq2 = df_ward2[hennsuu1].value_counts(bins=bins, sort=False)
+        st.dataframe(freq2)
     with right:
         fig, ax = plt.subplots()
-        ax.pie(freq, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
+        ax.pie(freq1, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
+        ax.pie(freq2, counterclock=False, startangle=90, autopct="%.1f%%", pctdistance=0.7)
         st.pyplot(fig)
+
 
 
 
