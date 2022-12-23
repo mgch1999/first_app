@@ -307,7 +307,8 @@ def analysis4():
     with left:
         bins = np.arange(0, 30, 3)
         freq = pd.DataFrame(df_ward1[hennsuu1].value_counts(bins=bins, sort=False))
-        st.dataframe(freq)
+        freq["prices"] = freq["prices"]/freq["prices"].sum()
+        st.dataframe(freq["prices"])
 
         
     
