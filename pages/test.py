@@ -304,7 +304,7 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     with left:
-        bins = np.arange(0, 25, 2.5)
+        bins = np.arange(0, 30, 3)
         freq = df_ward1[hennsuu1].value_counts(bins=bins, sort=False)
         st.dataframe(freq)
 
