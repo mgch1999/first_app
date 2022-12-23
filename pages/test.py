@@ -311,12 +311,12 @@ def analysis4():
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         st.dataframe(freq)
     with right:
+        colors = ["lightcolal", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumviolet"]
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
-        cm = plt.get_cmap("gist_rainbow")
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
-            bar_list = ax.barh(freq.columns, freq.iloc[i], color=cm, left=left_data, height=0.5)
+            bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors, left=left_data, height=0.5)
             left_data += freq.iloc[i]
         ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1), fontsize=10)
         plt.xlim([0, 1])
