@@ -311,7 +311,7 @@ def analysis4():
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         st.dataframe(freq)
     with right:
-        colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumviolet"]
+        colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
