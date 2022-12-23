@@ -315,9 +315,6 @@ def analysis4():
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data)
             left_data += freq.iloc[i]
-        ax.set_xlim([0,100])
-        ax.set_yticks(freq)
-        ax.set_yticklabels(freq.columns)
         st.pyplot(fig)
         
     
