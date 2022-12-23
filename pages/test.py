@@ -318,6 +318,7 @@ def analysis4():
             bar_list = ax.barh(freq.columns, freq.iloc[i], left=left_data, height=0.5)
             left_data += freq.iloc[i]
         ax.legend(label, loc="lower right")
+        plt.xlim([0, 1])
         st.pyplot(fig)
         
     
