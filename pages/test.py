@@ -338,8 +338,8 @@ def analysis4():
         plt.xlim([0, 1])
         st.pyplot(fig)
     
-    table = pd.DataFrame({f"area1":[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
-                          f"area2":[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
+    table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
+                          area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
                           index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
     st.table(table)
 
