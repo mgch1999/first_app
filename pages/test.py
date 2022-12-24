@@ -218,7 +218,7 @@ def ratio_price():
     fig, ax = plt.subplots()
     left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
     for i in range(len(freq.index)):
-        bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
+        bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.3)
         left_data += freq.iloc[i]
     ax.legend(label_price, loc='upper left', bbox_to_anchor=(1, 1))
     plt.xlim([0, 1])
