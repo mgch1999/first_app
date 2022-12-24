@@ -119,16 +119,16 @@ def bar():
                 bar_list[i].set_color("dodgerblue")
             elif ai[i] == area2:
                 bar_list[i].set_color("orange")
-            plt.xticks(rotation=90)
-            st.pyplot(fig)
+        plt.xticks(rotation=90)
+        st.pyplot(fig)
     else:
         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
         ai = avg.index
         for i in range(len(avg)):
             if ai[i] == area1:
                 bar_list[i].set_color("dodgerblue")
-            plt.xticks(rotation=90)
-            st.pyplot(fig)
+        plt.xticks(rotation=90)
+        st.pyplot(fig)
 
 bar()
 
