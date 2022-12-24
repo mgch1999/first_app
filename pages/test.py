@@ -327,8 +327,8 @@ def analysis4():
         bins_size = np.arange(10, 40, 3)
         bins_years = np.arange(0, 50, 5)
         bins_access = np.arange(0, 20, 2)
-        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins_size, sort=False),
-                             f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins_size, sort=False)})
+        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins_years, sort=False),
+                             f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins_years, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
         label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
