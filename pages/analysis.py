@@ -189,7 +189,7 @@ def hist():
     if area1 == "全体" and area2 == "指定なし":
         ymin, ymax = 0, 50000
         ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
         plt.xlabel(hennsuu)
         plt.ylabel("物件数")
         plt.legend()
