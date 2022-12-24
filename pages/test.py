@@ -339,7 +339,7 @@ def analysis4():
         st.pyplot(fig)
     
     avg = pd.pivot_table(df, index="ku")
-    st.dataframe(avg)
+    st.table(avg)
 
 
 
