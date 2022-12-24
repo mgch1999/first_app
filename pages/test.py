@@ -291,35 +291,32 @@ def ratio():
 ratio()
 
 
+def table():
+    if area1 == "全体" and area2 == "指定なし":
+        table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
+                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+        st.table(table.style.format('{:.1f}'))
+    elif area1 == "全体" and area2 != "指定なし":
+        table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()],
+                              area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
+                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+        st.table(table.style.format('{:.1f}'))
+    elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
+        table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()]},
+                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+        st.table(table.style.format('{:.1f}'))
+    else:
+        table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
+                              area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
+                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+        st.table(table.style.format('{:.1f}'))
 
+table()
    
     
-#     table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
-#                           area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
-#                           index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
-#     st.table(table.style.format('{:.1f}'))
-
+    
 
 
 
    
-# class Select():
-#     def __init__(self, area1, area2):
-#         self.area1 = area1
-#         self.area2 = area2
-
-#     def select_city(self): 
-#         if self.area1 == "全体" and self.area2 == "指定なし":
-#             analysis1()
-#         elif area1 == "全体" and area2 != "指定なし":
-#             analysis2()
-#         elif area1 != "全体" and area2 == "指定なし":
-#             analysis3()
-#         elif area1 == area2:
-#             analysis3()
-#         else:
-#             analysis4()
-    
-# scatter_plot = Select(area1, area2)
-# scatter_plot.select_city()
 
