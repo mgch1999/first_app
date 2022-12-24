@@ -338,7 +338,10 @@ def analysis4():
         plt.xlim([0, 1])
         st.pyplot(fig)
     
-    st.dataframe(df_ward1)
+    table = pd.DataFrame({f"area1":[avg[df_ward1["prices"]], avg[df_ward1["sizes"]], avg[df_ward1["yearss"]], avg[df_ward1["accesses"]]],
+                          f"area2":[avg[df_ward2["prices"]], avg[df_ward2["sizes"]], avg[df_ward2["yearss"]], avg[df_ward2["accesses"]]]},
+                          index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+    st.table(table)
 
 
 
