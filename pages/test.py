@@ -154,7 +154,7 @@ def scatter():
     elif area1 == "全体" and area2 != "指定なし":
         df_ward2 = df[df["ku"] == area2]
         ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df_ward2[hennsuu1], df_ward1["prices"], alpha=0.4, color="orange",s=10, label=area1)
+        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area1)
         plt.xlabel(hennsuu)
         plt.ylabel("家賃")
         plt.legend()
