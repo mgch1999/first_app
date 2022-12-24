@@ -210,19 +210,22 @@ def hist():
         plt.legend()
         st.pyplot(fig)
 
-def ratio_price():
-    bins_price = np.arange(0, 30, 3)
-    label_price = ["3万円以下", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
-    freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins=bins_price, sort=False)})
+bins_price = np.arange(0, 30, 3)
+label_price = ["3万円以下", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
+
+def ratio(bins, label):
+    freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins, sort=False)})
     freq[area1] = freq[area1]/freq[area1].sum()
     fig, ax = plt.subplots()
     left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
     for i in range(len(freq.index)):
-        bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.1)
+        bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
         left_data += freq.iloc[i]
-    ax.legend(label_price, loc='upper left', bbox_to_anchor=(1, 1))
+    ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1))
     plt.xlim([0, 1])
     st.pyplot(fig)
+
+ratio(bins_price, label_price)
     
     # bins_size_1ldk = np.arange(10, 110, 10)
     # bins_size = np.arange(10, 40, 3)
@@ -519,4 +522,3 @@ def ratio_price():
 # scatter_plot = Select(area1, area2)
 # scatter_plot.select_city()
 
-ratio_price()
