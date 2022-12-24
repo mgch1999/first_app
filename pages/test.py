@@ -297,7 +297,7 @@ def analysis4():
                 bar_list[i].set_color("dodgerblue")
             elif ai[i] == area2:
                 bar_list[i].set_color("orange")
-        plt.xticks(rotation=50)
+        plt.xticks(rotation=90)
         st.pyplot(fig)
     with right:
         fig, ax = plt.subplots()
