@@ -288,9 +288,6 @@ def ratio():
     else:
         ana.ratio4()
 
-ratio()
-
-
 def table():
     if area1 == "全体" and area2 == "指定なし":
         table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
@@ -311,8 +308,19 @@ def table():
                               index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
         st.table(table.style.format('{:.1f}'))
 
+left, right = st.columns(2)
+with left:
+    bar()
+with right:
+    scatter()
+
+left, right = st.columns(2)
+with left:
+    hist()
+with right:
+    ratio()
+
 table()
-   
     
     
 
