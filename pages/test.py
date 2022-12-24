@@ -297,7 +297,6 @@ def analysis4():
                 bar_list[i].set_color("dodgerblue")
             elif ai[i] == area2:
                 bar_list[i].set_color("orange")
-        plt.legend()
         plt.xticks(rotation=50)
         st.pyplot(fig)
     with right:
@@ -323,12 +322,16 @@ def analysis4():
         plt.legend()
         st.pyplot(fig)
     with right:
-        bins = np.arange(0, 30, 3)
-        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins, sort=False),
-                             f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins, sort=False)})
+        bins_price = np.arange(0, 30, 3)
+        bins_size_1ldk = np.arange(10, 110, 10)
+        bins_size = np.arange(10, 40, 3)
+        bins_years = np.arange(0, 50, 5)
+        bins_access = np.arange(0, 20, 2)
+        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins=bins_size_1ldk, sort=False),
+                             f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins_size_1ldk, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
-        label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24~27万円"]
+        label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
