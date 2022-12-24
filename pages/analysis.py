@@ -116,112 +116,112 @@ df = pd.DataFrame(data)
 
 df_ward1 = df[df["ku"] == area1]
 df_ward2 = df[df["ku"] == area2]
+avg = pd.pivot_table(df, index="ku", values=hennsuu1)
+avg = avg.sort_values(hennsuu1, ascending=False)
 
-def bar():
-    avg = pd.pivot_table(df, index="ku", values=hennsuu1)
-    avg = avg.sort_values(hennsuu1, ascending=False)
-    fig, ax = plt.subplots()
-    plt.title(f"平均{hennsuu}")
-    if area1 == "全体" and area2 == "指定なし":
-        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
-        plt.xticks(rotation=90)
-        st.pyplot(fig)
-    elif area1 == "全体" and area2 != "指定なし" or area1 == area2:
-        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-        ai = avg.index
-        for i in range(len(avg)):
-            if ai[i] == area2:
-                bar_list[i].set_color("dodgerblue")
-        plt.xticks(rotation=90)
-        st.pyplot(fig)
-    elif area1 != "全体" and area2 != "指定なし":
-        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-        ai = avg.index
-        for i in range(len(avg)):
-            if ai[i] == area1:
-                bar_list[i].set_color("dodgerblue")
-            elif ai[i] == area2:
-                bar_list[i].set_color("orange")
-        plt.xticks(rotation=90)
-        st.pyplot(fig)
-    else:
-        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-        ai = avg.index
-        for i in range(len(avg)):
-            if ai[i] == area1:
-                bar_list[i].set_color("dodgerblue")
-        plt.xticks(rotation=90)
-        st.pyplot(fig)
+# def bar():
+#     fig, ax = plt.subplots()
+#     plt.title(f"平均{hennsuu}")
+#     if area1 == "全体" and area2 == "指定なし":
+#         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
+#         plt.xticks(rotation=90)
+#         st.pyplot(fig)
+#     elif area1 == "全体" and area2 != "指定なし" or area1 == area2:
+#         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
+#         ai = avg.index
+#         for i in range(len(avg)):
+#             if ai[i] == area2:
+#                 bar_list[i].set_color("dodgerblue")
+#         plt.xticks(rotation=90)
+#         st.pyplot(fig)
+#     elif area1 != "全体" and area2 != "指定なし":
+#         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
+#         ai = avg.index
+#         for i in range(len(avg)):
+#             if ai[i] == area1:
+#                 bar_list[i].set_color("dodgerblue")
+#             elif ai[i] == area2:
+#                 bar_list[i].set_color("orange")
+#         plt.xticks(rotation=90)
+#         st.pyplot(fig)
+#     else:
+#         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
+#         ai = avg.index
+#         for i in range(len(avg)):
+#             if ai[i] == area1:
+#                 bar_list[i].set_color("dodgerblue")
+#         plt.xticks(rotation=90)
+#         st.pyplot(fig)
 
-def scatter():
-    fig, ax = plt.subplots()
-    plt.title("散布図")
-    if area1 == "全体" and area2 == "指定なし":
-        ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("家賃")
-        plt.legend()
-        st.pyplot(fig)
-    elif area1 == "全体" and area2 != "指定なし":
-        ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
-        plt.xlabel(hennsuu)
-        plt.ylabel("家賃")
-        plt.legend()
-        st.pyplot(fig)
-    elif area1 != "全体" and area2 == "指定なし" or area1 == area2:
-        ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("家賃")
-        plt.legend()
-        st.pyplot(fig)
-    else:
-        ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
-        plt.xlabel(hennsuu)
-        plt.ylabel("家賃")
-        plt.legend()
-        st.pyplot(fig)
+# def scatter():
+#     fig, ax = plt.subplots()
+#     plt.title("散布図")
+#     if area1 == "全体" and area2 == "指定なし":
+#         ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("家賃")
+#         plt.legend()
+#         st.pyplot(fig)
+#     elif area1 == "全体" and area2 != "指定なし":
+#         ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+#         ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("家賃")
+#         plt.legend()
+#         st.pyplot(fig)
+#     elif area1 != "全体" and area2 == "指定なし" or area1 == area2:
+#         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("家賃")
+#         plt.legend()
+#         st.pyplot(fig)
+#     else:
+#         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+#         ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("家賃")
+#         plt.legend()
+#         st.pyplot(fig)
 
-def hist():
-    fig, ax = plt.subplots()
-    plt.title("ヒストグラム")
-    if area1 == "全体" and area2 == "指定なし":
-        ymin, ymax = 0, 50000
-        ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
-    elif area1 == "全体" and area2 != "指定なし":
-        ymin, ymax = 0, 50000
-        ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        ax.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
-        plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-        plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
-    elif area1 != "全体" and area2 == "指定なし" or area1 == area2:
-        ymin, ymax = 0, 1500
-        ax.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
-    else:
-        ymin, ymax = 0, 1500
-        ax.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-        ax.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
-        plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-        plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
-        plt.xlabel(hennsuu)
-        plt.ylabel("物件数")
-        plt.legend()
-        st.pyplot(fig)
+# def hist():
+#     fig, ax = plt.subplots()
+#     plt.title("ヒストグラム")
+#     if area1 == "全体" and area2 == "指定なし":
+#         ymin, ymax = 0, 50000
+#         ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+#         plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("物件数")
+#         plt.legend()
+#         st.pyplot(fig)
+#     elif area1 == "全体" and area2 != "指定なし":
+#         ymin, ymax = 0, 50000
+#         ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+#         ax.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
+#         plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+#         plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("物件数")
+#         plt.legend()
+#         st.pyplot(fig)
+#     elif area1 != "全体" and area2 == "指定なし" or area1 == area2:
+#         ymin, ymax = 0, 1500
+#         ax.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+#         plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("物件数")
+#         plt.legend()
+#         st.pyplot(fig)
+#     else:
+#         ymin, ymax = 0, 1500
+#         ax.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+#         ax.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
+#         plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+#         plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+#         plt.xlabel(hennsuu)
+#         plt.ylabel("物件数")
+#         plt.legend()
+#         st.pyplot(fig)
 class Ratio:
     def __init__(self, bins, label):
         self.bins = bins 
@@ -281,53 +281,100 @@ class Ratio:
         plt.xlim([0, 1])
         st.pyplot(fig)
 
-def ratio():
-    ana = Ratio(bins, label)
-    if area1 == "全体" and area2 == "指定なし":
+ana = Ratio(bins, label)
+# def ratio():
+#     ana = Ratio(bins, label)
+#     if area1 == "全体" and area2 == "指定なし":
+#         ana.ratio1()
+#     elif area1 == "全体" and area2 != "指定なし":
+#         ana.ratio2()
+#     elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
+#         ana.ratio3()
+#     else:
+#         ana.ratio4()
+
+# def table():
+#     if area1 == "全体" and area2 == "指定なし":
+#         table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
+#                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
+#         st.table(table.style.format('{:.1f}'))
+#     elif area1 == "全体" and area2 != "指定なし":
+#         table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()],
+#                               area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
+#                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
+#         st.table(table.style.format('{:.1f}'))
+#     elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
+#         table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()]},
+#                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
+#         st.table(table.style.format('{:.1f}'))
+#     else:
+#         table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
+#                               area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
+#                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
+#         st.table(table.style.format('{:.1f}'))
+
+# left, right = st.columns(2)
+# with left:
+#     bar()
+# with right:
+#     scatter()
+
+# left, right = st.columns(2)
+# with left:
+#     hist()
+# with right:
+#     ratio()
+
+# table()
+    
+
+
+def analysis1():
+    left, right = st.columns(2)
+    with left:
+        fig, ax = plt.subplots()
+        plt.title(f"平均{hennsuu}")
+        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
+        plt.xticks(rotation=90)
+        st.pyplot(fig)
+    with right:
+        fig, ax = plt.subplots()
+        plt.title("散布図")
+        ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    
+    left, right = st.columns(2)
+    with left:
+        fig, ax = plt.subplots()
+        plt.title("ヒストグラム")
+        ymin, ymax = 0, 50000
+        ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+        plt.vlines(df[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("物件数")
+        plt.legend()
+        st.pyplot(fig)
+    with right:
         ana.ratio1()
-    elif area1 == "全体" and area2 != "指定なし":
-        ana.ratio2()
-    elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
-        ana.ratio3()
-    else:
-        ana.ratio4()
-
-def table():
-    if area1 == "全体" and area2 == "指定なし":
-        table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
+    
+    table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
-        st.table(table.style.format('{:.1f}'))
-    elif area1 == "全体" and area2 != "指定なし":
-        table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()],
-                              area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
-                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
-        st.table(table.style.format('{:.1f}'))
-    elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
-        table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()]},
-                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
-        st.table(table.style.format('{:.1f}'))
-    else:
-        table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
-                              area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
-                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
-        st.table(table.style.format('{:.1f}'))
-
-left, right = st.columns(2)
-with left:
-    bar()
-with right:
-    scatter()
-
-left, right = st.columns(2)
-with left:
-    hist()
-with right:
-    ratio()
-
-table()
+    st.table(table.style.format('{:.1f}'))
     
     
 
+if area1 == "全体" and area2 == "指定なし":
+    analysis1()
+elif area1 == "全体" and area2 != "指定なし":
+    pass
+elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
+    pass
+else:
+    pass
+        
 
 
    
