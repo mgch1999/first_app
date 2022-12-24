@@ -115,6 +115,14 @@ def bar():
         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="dodgerblue")
         plt.xticks(rotation=90)
         st.pyplot(fig)
+    elif area1 == "全体" and area2 != "指定なし" or area1 == area2:
+        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
+        ai = avg.index
+        for i in range(len(avg)):
+            if ai[i] == area2:
+                bar_list[i].set_color("dodgerblue")
+        plt.xticks(rotation=90)
+        st.pyplot(fig)
     elif area1 != "全体" and area2 != "指定なし":
         bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
         ai = avg.index
@@ -123,14 +131,6 @@ def bar():
                 bar_list[i].set_color("dodgerblue")
             elif ai[i] == area2:
                 bar_list[i].set_color("orange")
-        plt.xticks(rotation=90)
-        st.pyplot(fig)
-    elif area1 == "全体" and area2 != "指定なし":
-        bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-        ai = avg.index
-        for i in range(len(avg)):
-            if ai[i] == area2:
-                bar_list[i].set_color("dodgerblue")
         plt.xticks(rotation=90)
         st.pyplot(fig)
     else:
@@ -154,12 +154,12 @@ def scatter():
     elif area1 == "全体" and area2 != "指定なし":
         df_ward2 = df[df["ku"] == area2]
         ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area1)
+        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
         plt.xlabel(hennsuu)
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
-    elif area1 != "全体" and area2 == "指定なし":
+    elif area1 != "全体" and area2 == "指定なし" or area1 == area2:
         df_ward1 = df[df["ku"] == area1]
         ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
         plt.xlabel(hennsuu)
@@ -176,6 +176,28 @@ def scatter():
         plt.legend()
         st.pyplot(fig)
 
+def hist():
+    fig, ax = plt.subplots()
+    plt.title("ヒストグラム")
+    if area1 == "全体" and area2 == "指定なし":
+        ymin, ymax = 0, 50000
+        ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+        plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("物件数")
+        plt.legend()
+        st.pyplot(fig)
+    elif area1 == "全体" and area2 != "指定なし":
+        ax.hist(df[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+        ax.hist()
+    plt.hist(df_ward1[hennsuu1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
+    plt.hist(df_ward2[hennsuu1],alpha=0.4, color="orange", bins=100, label=area2)
+    plt.vlines(df_ward1[hennsuu1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
+    plt.vlines(df_ward2[hennsuu1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
+    plt.xlabel(hennsuu)
+    plt.ylabel("物件数")
+    plt.legend()
+    st.pyplot(fig)
 
 # def analysis1():
 #     ymin, ymax = 0, 50000
