@@ -211,7 +211,15 @@ def hist():
         st.pyplot(fig)
 
 bins_price = np.arange(0, 30, 3)
+bins_size_1ldk = np.arange(10, 110, 10)
+bins_size = np.arange(10, 40, 3)
+bins_years = np.arange(0, 50, 5)
+bins_access = np.arange(0, 20, 2)
 label_price = ["3万円以下", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
+label_size = ["10~13m2", "13~16m2", "16~19m2", "19~22m2", "22~25m2", "25~28m2", "28~31m2", "31~34m2", "34m2以上"]
+label_size_1ldk = ["10~20m2", "20~30m2", "30~40m2", "40~50m2", "50~60m2", "60~70m2", "70~80m2", "80~90m2", "90m2以上"]
+label_years = ["5年以下", "5~10年", "10~15年", "15~20年", "20~25年", "25~30年", "30~35年", "35~40年", "40年以上"]
+label_access = ["2分以下", "2~4分", "4~6分", "6~8分", "8~10分", "10~12分", "12~14分", "14~16分" ,"16分以上"]
 
 def ratio(bins, label):
     freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins, sort=False)})
@@ -231,7 +239,7 @@ class Ratio:
         self.bins = bins 
         self.label = label
 
-    def ratio(self):
+    def ratio1(self):
         freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins = self.bins, sort=False)})
         freq[area1] = freq[area1]/freq[area1].sum()
         fig, ax = plt.subplots()
@@ -242,9 +250,24 @@ class Ratio:
         ax.legend(self.label, loc='upper left', bbox_to_anchor=(1, 1))
         plt.xlim([0, 1])
         st.pyplot(fig)
+    
+    def ratio2(self):
+        freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins = self.bins, sort=False),
+                             f"{area2}":df_ward2[hennsuu1].value_counts(bins = self.bins, sort=False)})
+        freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
+        fig, ax = plt.subplots()
+        left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
+        for i in range(len(freq.index)):
+            bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
+            left_data += freq.iloc[i]
+        ax.legend(self.label, loc='upper left', bbox_to_anchor=(1, 1))
+        plt.xlim([0, 1])
+        st.pyplot(fig)
 
-a = Ratio(bins_price, label_price)
-a.ratio()
+
+a = Ratio(bins_size, label_size)
+a.ratio2()
+
 
 
     # bins_size_1ldk = np.arange(10, 110, 10)
