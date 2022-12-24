@@ -276,11 +276,14 @@ class Ratio:
         st.pyplot(fig)
 
 def ratio():
+    ana = Ratio(bins, label)
     if area1 == "全体" and area2 == "指定なし":
-        ana1 = Ratio(bins, label)
-        ana1.ratio1()
+        ana.ratio1()
+    if area1 == "全体" and area2 != "指定なし":
+        ana.ratio2()
     else:
         pass
+    
 
         
 
