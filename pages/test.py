@@ -64,6 +64,8 @@ else:
 
 if hennsuu == "面積(m2)":
     hennsuu1, bins, label = "sizes", bins_size, label_size
+    if madori == "tokyo_1ldk":
+        bins, label = bins_size_1ldk, label_size_1ldk
 elif hennsuu == "築年数":
     hennsuu1, bins, label = "yearss", bins_years, label_years
 elif hennsuu == "アクセス(分)":
