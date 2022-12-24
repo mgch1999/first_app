@@ -331,13 +331,17 @@ def analysis4():
                              f"{area1}":df_ward1[hennsuu1].value_counts(bins=bins_access, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
-        label = ["0~3万円", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
+        label_price = ["3万円以下", "3~6万円", "6~9万円", "9~12万円", "12~15万円", "15~18万円", "18~21万円", "21~24万円" , "24万円以上"]
+        label_size = ["10~13m2", "13~16m2", "16~19m2", "19~22m2", "22~25m2", "25~28m2", "28~31m2", "31~34m2", "34m2以上"]
+        label_size_1ldk = ["10~20m2", "20~30m2", "30~40m2", "40~50m2", "50~60m2", "60~70m2", "70~80m2", "80~90m2", "90m2以上"]
+        label_years = ["5年以下", "5~10年", "10~15年", "15~20年", "20~25年", "25~30年", "30~35年", "35~40年", "40年以上"]
+        label_access = ["2分以下", "2~4分", "4~6分", "6~8分", "8~10分", "10~12分", "12~14分", "14~16分" ,"16分以上"]
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
         for i in range(len(freq.index)):
             bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
             left_data += freq.iloc[i]
-        ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1))
+        ax.legend(label_size, loc='upper left', bbox_to_anchor=(1, 1))
         plt.xlim([0, 1])
         st.pyplot(fig)
     
