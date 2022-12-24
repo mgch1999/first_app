@@ -295,21 +295,21 @@ def ratio():
 def table():
     if area1 == "全体" and area2 == "指定なし":
         table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()]},
-                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
         st.table(table.style.format('{:.1f}'))
     elif area1 == "全体" and area2 != "指定なし":
         table = pd.DataFrame({area1:[df["prices"].mean(), df["sizes"].mean(), df["yearss"].mean(), df["accesses"].mean()],
                               area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
-                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
         st.table(table.style.format('{:.1f}'))
     elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
         table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()]},
-                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
         st.table(table.style.format('{:.1f}'))
     else:
         table = pd.DataFrame({area1:[df_ward1["prices"].mean(), df_ward1["sizes"].mean(), df_ward1["yearss"].mean(), df_ward1["accesses"].mean()],
                               area2:[df_ward2["prices"].mean(), df_ward2["sizes"].mean(), df_ward2["yearss"].mean(), df_ward2["accesses"].mean()]},
-                              index=["平均家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"])
+                              index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
         st.table(table.style.format('{:.1f}'))
 
 left, right = st.columns(2)
