@@ -60,7 +60,6 @@ elif hennsuu == "アクセス(分)":
 else:
     hennsuu1 = "prices"
 
-
 query = f"""
     WITH data_with_ku AS (
     SELECT
@@ -102,6 +101,11 @@ query = f"""
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
 
+df_ward1 = df[df["ku"] == area1]
+df_ward2 = df[df["ku"] == area2]
+
+
+
 def bar():
     avg = pd.pivot_table(df, index="ku", values=hennsuu1)
     avg = avg.sort_values(hennsuu1, ascending=False)
@@ -138,7 +142,39 @@ def bar():
         plt.xticks(rotation=90)
         st.pyplot(fig)
 
-bar()
+def scatter():
+    fig, ax = plt.subplots()
+    plt.title("散布図")
+    if area1 == "全体" and area2 == "指定なし":
+        ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    elif area1 == "全体" and area2 != "指定なし":
+        df_ward2 = df[df["ku"] == area2]
+        ax.scatter(df[hennsuu1], df["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        ax.scatter(df_ward2[hennsuu1], df_ward1["prices"], alpha=0.4, color="orange",s=10, label=area1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    elif area1 != "全体" and area2 == "指定なし":
+        df_ward1 = df[df["ku"] == area1]
+        ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        plt.xlabel(hennsuu)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
+    else:
+        df_ward1 = df[df["ku"] == area1]
+        df_ward2 = df[df["ku"] == area2]
+        ax.scatter(df_ward1[hennsuu1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
+        ax.scatter(df_ward2[hennsuu1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
+        plt.xlabel(hennsuu)
+        plt.ylabel("家賃")
+        plt.legend()
+        st.pyplot(fig)
 
 
 # def analysis1():
@@ -413,18 +449,5 @@ bar()
 # scatter_plot = Select(area1, area2)
 # scatter_plot.select_city()
 
-def bar():
-    avg = pd.pivot_table(df, index="ku", values=hennsuu1)
-    avg = avg.sort_values(hennsuu1, ascending=False)
-    fig, ax = plt.subplots()
-    plt.title(f"平均{hennsuu}")
-    bar_list = ax.bar(avg.index, height=avg[hennsuu1], color="lightgray")
-    ai = avg.index
-    for i in range(len(avg)):
-        if ai[i] == area1:
-            bar_list[i].set_color("dodgerblue")
-        elif ai[i] == area2:
-            bar_list[i].set_color("orange")
-    plt.xticks(rotation=90)
-    st.pyplot(fig)
-
+bar()
+scatter()
