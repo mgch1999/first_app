@@ -338,8 +338,7 @@ def analysis4():
         plt.xlim([0, 1])
         st.pyplot(fig)
     
-    avg = pd.pivot_table(df, index="ku")
-    st.table(avg)
+    st.dataframe(df_ward1)
 
 
 
