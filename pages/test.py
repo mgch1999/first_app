@@ -279,9 +279,11 @@ def analysis3():
         st.pyplot(fig)
 
 def analysis4():
+
     ymin, ymax = 0, 1500
     df_ward1 = df[df["ku"] == area1]
     df_ward2 = df[df["ku"] == area2]
+
     left, right = st.columns(2)
     with left:
         avg = pd.pivot_table(df, index="ku", values=hennsuu1)
@@ -307,6 +309,7 @@ def analysis4():
         plt.ylabel("家賃")
         plt.legend()
         st.pyplot(fig)
+
     left, right = st.columns(2)
     with left:
         fig, ax = plt.subplots()
@@ -334,67 +337,14 @@ def analysis4():
         ax.legend(label, loc='upper left', bbox_to_anchor=(1, 1))
         plt.xlim([0, 1])
         st.pyplot(fig)
-        
     
+    avg = pd.pivot_table(df, index="ku")
+    st.dataframe(avg)
 
 
 
 
-    # with left:
-    #     exp = st.selectbox("説明変数", variable1)
-    #     st.write("目的変数:家賃(万円)")
-    #     if exp == "面積(m2)":
-    #         exp1 = "sizes"
-    #     elif exp == "築年数":
-    #         exp1 = "yearss"
-    #     else:
-    #         exp1 = "accesses"
-    #     s1 = pd.Series(df_ward1[exp1])
-    #     s2 = pd.Series(df_ward1["prices"])
-    #     s3 = pd.Series(df_ward2[exp1])
-    #     s4 = pd.Series(df_ward2["prices"])
-    #     st.write("相関係数")
-    #     corr1 = round(s1.corr(s2), 2)
-    #     corr2 = round(s3.corr(s4), 2)
-    #     st.write(f"{area1}:{corr1}")
-    #     st.write(f"{area2}:{corr2}")
-    # with middle1:
-    #     fig, ax = plt.subplots()
-    #     ax.scatter(df_ward1[exp1], df_ward1["prices"], alpha=0.4, color="dodgerblue",s=10, label=area1)
-    #     ax.scatter(df_ward2[exp1], df_ward2["prices"], alpha=0.4, color="orange",s=10, label=area2)
-    #     plt.xlabel(exp)
-    #     plt.ylabel("家賃")
-    #     plt.legend()
-    #     st.pyplot(fig)
-    # with middle2:
-    #     exp = st.selectbox("変数", variable2)
-    #     if exp == "面積(m2)":
-    #         exp1 = "sizes"
-    #         unit = "m2"
-    #     elif exp == "築年数":
-    #         exp1 = "yearss"
-    #         unit = "年"
-    #     elif exp == "アクセス(分)":
-    #         exp1 = "accesses"
-    #         unit = "分"
-    #     else:
-    #         exp1 = "prices"
-    #         unit = "万円"
-    #     st.write("平均")
-    #     avg1 = round(df_ward1[exp1].mean(), 2)
-    #     avg2 = round(df_ward2[exp1].mean(), 2)
-    #     st.write(f"{area1}:{avg1}{unit}")
-    #     st.write(f"{area2}:{avg2}{unit}")
-    # with right:
-    #     fig, ax = plt.subplots()
-    #     plt.hist(df_ward1[exp1],alpha=0.4, color="dodgerblue", bins=100, label=area1)
-    #     plt.hist(df_ward2[exp1],alpha=0.4, color="orange", bins=100, label=area2)
-    #     plt.vlines(df_ward1[exp1].mean(), ymin, ymax, color="dodgerblue", linestyle='dashed', linewidth=1)
-    #     plt.vlines(df_ward2[exp1].mean(), ymin, ymax, color="orange", linestyle='dashed', linewidth=1)
-    #     plt.xlabel(exp)
-    #     plt.ylabel("物件数")
-    #     plt.legend()
-    #     st.pyplot(fig)
+   
 class Select():
     def __init__(self, area1, area2):
         self.area1 = area1
