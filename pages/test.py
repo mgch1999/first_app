@@ -238,8 +238,8 @@ class Ratio:
         st.pyplot(fig)
     
     def ratio2(self):
-        freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins = self.bins, sort=False),
-                             f"{area2}":df_ward2[hennsuu1].value_counts(bins = self.bins, sort=False)})
+        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins = self.bins, sort=False),
+                             f"{area1}":df[hennsuu1].value_counts(bins = self.bins, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
@@ -263,8 +263,8 @@ class Ratio:
         st.pyplot(fig)
     
     def ratio4(self):
-        freq = pd.DataFrame({f"{area1}":df_ward1[hennsuu1].value_counts(bins = self.bins, sort=False),
-                             f"{area1}":df_ward2[hennsuu1].value_counts(bins = self.bins, sort=False)})
+        freq = pd.DataFrame({f"{area2}":df_ward2[hennsuu1].value_counts(bins = self.bins, sort=False),
+                             f"{area1}":df_ward1[hennsuu1].value_counts(bins = self.bins, sort=False)})
         freq[area1], freq[area2] = freq[area1]/freq[area1].sum(), freq[area2]/freq[area2].sum()
         fig, ax = plt.subplots()
         left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
@@ -279,13 +279,12 @@ def ratio():
     ana = Ratio(bins, label)
     if area1 == "全体" and area2 == "指定なし":
         ana.ratio1()
-    if area1 == "全体" and area2 != "指定なし":
+    elif area1 == "全体" and area2 != "指定なし":
         ana.ratio2()
+    elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
+        ana.ratio3
     else:
-        pass
-    
-
-        
+        ana.ratio4
 
 ratio()
 
