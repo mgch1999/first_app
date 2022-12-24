@@ -225,8 +225,28 @@ def ratio(bins, label):
     plt.xlim([0, 1])
     st.pyplot(fig)
 
-ratio(bins_price, label_price)
-    
+class Ratio:
+
+    def __init__(self, bins, label):
+        self.bins = bins 
+        self.label = label
+
+    def ratio(self):
+        freq = pd.DataFrame({f"{area1}":df[hennsuu1].value_counts(bins = self.bins, sort=False)})
+        freq[area1] = freq[area1]/freq[area1].sum()
+        fig, ax = plt.subplots()
+        left_data = pd.Series(np.zeros(len(freq.columns)), index=freq.columns.tolist())
+        for i in range(len(freq.index)):
+            bar_list = ax.barh(freq.columns, freq.iloc[i], color=colors[i], left=left_data, height=0.5)
+            left_data += freq.iloc[i]
+        ax.legend(self.label, loc='upper left', bbox_to_anchor=(1, 1))
+        plt.xlim([0, 1])
+        st.pyplot(fig)
+
+a = Ratio(bins_price, label_price)
+a.ratio()
+
+
     # bins_size_1ldk = np.arange(10, 110, 10)
     # bins_size = np.arange(10, 40, 3)
     # bins_years = np.arange(0, 50, 5)
