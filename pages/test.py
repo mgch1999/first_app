@@ -282,9 +282,9 @@ def ratio():
     elif area1 == "全体" and area2 != "指定なし":
         ana.ratio2()
     elif area1 != "全体" and area2 == "指定なし" or area1 == area2: 
-        ana.ratio3
+        ana.ratio3()
     else:
-        ana.ratio4
+        ana.ratio4()
 
 ratio()
 
