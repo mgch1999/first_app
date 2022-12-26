@@ -14,7 +14,7 @@ URL:https://mgch1999-first-app-prediction-iau5bs.streamlit.app/analysis
 ## 技術的特徴
 
 * データ収集  
-仮想環境上で2週間に1回、物件サイトsuumoからデータを収集するファイルを定期実行 
+仮想環境上で2週間に1回、物件サイトsuumoからデータを収集するファイルを定期実行  
 データをGCPのbig queryに保管
 
 * データ抽出  
