@@ -6,11 +6,12 @@ URL:https://mgch1999-first-app-prediction-iau5bs.streamlit.app/analysis
 # 概要
 
 1ページ目で家賃予測、2ページ目でデータ分析という構成になっています。  
+![](スクリーンショット 2022-12-26 21.08.33.png)
 
 # 技術的特徴
 
 * データ収集 
-仮想環境上で2週間に1回、賃貸サイトsuumoからデータを収集するファイルを定期実行 
+仮想環境上で2週間に1回、物件サイトsuumoからデータを収集するファイルを定期実行 
 データをGCPのbig queryに保管
 
 * データ抽出 
@@ -30,8 +31,14 @@ SQL
 
 # 製作者
 
-澤谷景成
+澤谷景成 
 mail:beatlove303@gmail.com
+
+# 使用サイト
+
+物件サイトsuumo 
+URL:https://suumo.jp/
+
 
 
 
