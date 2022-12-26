@@ -11,9 +11,11 @@ import matplotlib.pyplot as plt
 import japanize_matplotlib
 import numpy as np
 
+#ページ設定
 st.set_page_config(layout="wide",
                    initial_sidebar_state="auto")
- 
+
+#api呼び出し
 def get_credentials(credential):
     if credential == "gcp_service_account":
         return service_account.Credentials.from_service_account_info(
@@ -32,18 +34,13 @@ client = bigquery.Client(
             project=credentials.project_id,
         )
 
+#リスト関連
 ward1 = ["全体", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 ward2 = ["指定なし", "千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
                                       "豊島区", "北区", "荒川区", "板橋区", "練馬区", "足立区", "葛飾区", "江戸川区"]
 variable = ["家賃(万円)", "面積(m2)", "築年数", "アクセス(分)"]
 colors = ["lightcoral", "darkorange", "gold", "lightgreen", "mediumturquoise", "dodgerblue", "mediumblue", "mediumorchid", "mediumvioletred"]
-
-area1 = st.sidebar.selectbox("エリア", ward1)
-area2 = st.sidebar.selectbox("比較エリア", ward2)
-madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
-hennsuu = st.sidebar.selectbox("変数", variable)
-
 bins_price = np.arange(0, 30, 3)
 bins_size_1ldk = np.arange(10, 110, 10)
 bins_size = np.arange(10, 40, 3)
@@ -54,6 +51,12 @@ label_size = ["10~13m2", "13~16m2", "16~19m2", "19~22m2", "22~25m2", "25~28m2", 
 label_size_1ldk = ["10~20m2", "20~30m2", "30~40m2", "40~50m2", "50~60m2", "60~70m2", "70~80m2", "80~90m2", "90m2以上"]
 label_years = ["5年以下", "5~10年", "10~15年", "15~20年", "20~25年", "25~30年", "30~35年", "35~40年", "40年以上"]
 label_access = ["2分以下", "2~4分", "4~6分", "6~8分", "8~10分", "10~12分", "12~14分", "14~16分" ,"16分以上"]
+
+#条件選択
+area1 = st.sidebar.selectbox("エリア", ward1)
+area2 = st.sidebar.selectbox("比較エリア", ward2)
+madori = st.sidebar.selectbox("間取りタイプ",  ("ワンルーム", "1K", "1LDK"))
+hennsuu = st.sidebar.selectbox("変数", variable)
 
 if madori =="ワンルーム":
     madori = "tokyo_1r"
@@ -73,6 +76,7 @@ elif hennsuu == "アクセス(分)":
 else:
     hennsuu1, bins, label = "prices", bins_price, label_price
 
+#クエリ実行
 query = f"""
     WITH data_with_ku AS (
     SELECT
@@ -113,11 +117,11 @@ query = f"""
 
 data = client.query(query).to_dataframe()
 df = pd.DataFrame(data)
-
 df_ward1 = df[df["ku"] == area1]
 df_ward2 = df[df["ku"] == area2]
 avg = pd.pivot_table(df, index="ku", values=hennsuu1)
 avg = avg.sort_values(hennsuu1, ascending=False)
+
 class Ratio:
     def __init__(self, bins, label):
         self.bins = bins 
@@ -342,6 +346,7 @@ def analysis4():
                               index=["平均家賃(万円)", "平均面積(m2)", "平均築年数", "平均アクセス(分)"])
     st.table(table.style.format('{:.1f}'))
 
+#条件分岐
 if area1 == "全体" and area2 == "指定なし":
     analysis1()
 elif area1 == "全体" and area2 != "指定なし":

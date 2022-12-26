@@ -8,9 +8,11 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 import googlemaps
 
+#ページ設定
 st.set_page_config(layout="wide",
                    initial_sidebar_state="expanded")
 
+#api呼び出し
 def get_credentials(credential):
     if credential == "gcp_service_account":
         return service_account.Credentials.from_service_account_info(
@@ -21,7 +23,6 @@ def get_credentials(credential):
     else:
         return None
 
-
 credentials = get_credentials("gcp_service_account")
 gmaps = get_credentials("googlemapsapi")
         
@@ -30,6 +31,7 @@ client = bigquery.Client(
             project=credentials.project_id,
         )
 
+#サイドバー関連
 markdown1 = "使用方法"
 markdown2 = "このアプリは、東京23区内の賃貸物件を対象に希望条件下の家賃を予測します。お得な物件リストは、推定家賃よりも安く、指定した条件よりも築浅、面積が大きく、駅までのアクセス時間が短い物件を抽出したリストです。"
 st.sidebar.subheader(markdown1)
@@ -38,6 +40,7 @@ st.sidebar.write(markdown2)
 st.title("23区家賃予測アプリ")
 st.subheader("希望条件を選択")
 
+#条件選択
 left, right = st.columns(2)
 with left:
     area = st.selectbox("エリア", ("千代田区", "中央区", "港区", "新宿区", "文京区", "台東区", "墨田区", "江東区", "品川区", "目黒区", "大田区", "世田谷区", "渋谷区", "中野区", "杉並区",
@@ -63,14 +66,15 @@ with s2:
 with s3:
     access = st.slider('アクセス(分)', 0, 60, 5)
 
+#クエリ実行
 query = f"""
 SELECT * FROM prediction-rent-price.dataset1.{madori}
 WHERE address like "%{area}%";
 """
 data = client.query(query).to_dataframe()
-
 df = pd.DataFrame(data)
 
+#ランダムフォレストで予測
 x = df[["sizes", "yearss", "accesses"]]
 y = df[["prices"]]
 
@@ -90,6 +94,7 @@ df = df[df["yearss"] <= year]
 df = df[df["accesses"] <= access]
 df1 = df[["title", "price", "size", "years", "access", "address", "url"]]
 
+#リストとマップ表示
 left, right = st.columns(2)
 with left:
     st.subheader("お得な物件リスト")
