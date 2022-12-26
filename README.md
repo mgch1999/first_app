@@ -6,7 +6,7 @@ URL:https://mgch1999-first-app-prediction-iau5bs.streamlit.app/analysis
 # 概要
 
 1ページ目で家賃予測、2ページ目でデータ分析という構成になっています。  
-![](スクリーンショット 2022-12-26 21.08.33.png)
+![](https://user-images.githubusercontent.com/111175040/209550504-a05fb185-377b-459a-987a-a6ca7cfce9c4.png)
 
 # 技術的特徴
 
