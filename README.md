@@ -15,7 +15,7 @@ URL:https://mgch1999-first-app-prediction-iau5bs.streamlit.app/analysis
 
 * データ収集  
 仮想環境上で2週間に1回、物件サイトsuumoからデータを収集するファイルを定期実行  
-データをGCPのbig queryに保管
+データをGCPのgoogle cloud storageに保管
 
 * データ抽出  
 組み込みSQLでクエリ実行しbig queryからデータ抽出
